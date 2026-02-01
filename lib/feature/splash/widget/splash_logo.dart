@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SplashLogo extends StatefulWidget {
   const SplashLogo({super.key});
@@ -7,7 +8,8 @@ class SplashLogo extends StatefulWidget {
   State<SplashLogo> createState() => _SplashLogoState();
 }
 
-class _SplashLogoState extends State<SplashLogo> with SingleTickerProviderStateMixin {
+class _SplashLogoState extends State<SplashLogo>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _scale;
   late final Animation<double> _rotation;
@@ -16,11 +18,25 @@ class _SplashLogoState extends State<SplashLogo> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat(reverse: true);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1400),
+    )..repeat(reverse: true);
 
-    _scale = Tween<double>(begin: 0.92, end: 1.02).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    _rotation = Tween<double>(begin: -0.04, end: 0.04).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-    _checkScale = Tween<double>(begin: 0.8, end: 1.1).animate(CurvedAnimation(parent: _controller, curve: const Interval(0.5, 1.0, curve: Curves.elasticOut)));
+    _scale = Tween<double>(
+      begin: 0.92,
+      end: 1.02,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _rotation = Tween<double>(
+      begin: -0.04,
+      end: 0.04,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _checkScale = Tween<double>(begin: 0.8, end: 1.1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 1.0, curve: Curves.elasticOut),
+      ),
+    );
   }
 
   @override
@@ -48,11 +64,7 @@ class _SplashLogoState extends State<SplashLogo> with SingleTickerProviderStateM
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: const Icon(
-                    Icons.fingerprint,
-                    size: 60,
-                    color: Color(0xFF0F4C81),
-                  ),
+                  child: SvgPicture.asset('assets/images/logo.svg'),
                 ),
                 Positioned(
                   bottom: 5,

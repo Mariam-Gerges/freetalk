@@ -1,39 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OnboardingIconContainer extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
-  final double? iconSize;
+  final String imagePath;
 
-  const OnboardingIconContainer({
-    super.key,
-    required this.icon,
-    this.iconColor = const Color(0xFF0F4C81),
-    this.iconSize = 70,
-  });
+  const OnboardingIconContainer({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 120,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        
-        boxShadow: [
-          BoxShadow(
-            color: iconColor.withAlpha(90),
-            blurRadius: 50,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Icon(
-        icon,
-        size: iconSize,
-        color: iconColor,
-      ),
+      width: 130,
+      height: 130,
+      decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+      child: SvgPicture.asset(imagePath, fit: BoxFit.contain),
     );
   }
 }

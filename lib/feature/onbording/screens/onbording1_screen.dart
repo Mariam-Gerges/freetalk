@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:freetalk/core/routing/routes.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/feature/onbording/widget/dotsIndicator.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_content.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_icon_container.dart';
@@ -26,7 +27,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
     try {
       context.go(route);
     } catch (e) {
-      Navigator.of(context).pushReplacementNamed(route);
+      Navigator.of(context).pushNamed(route);
     }
   }
 
@@ -34,7 +35,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: AppColors.primary,
         child: Column(
           children: [
             OnboardingSkipButton(
@@ -45,15 +46,14 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const OnboardingIconContainer(
-                    icon: Icons.assignment_turned_in_outlined,
-                    iconColor: Color(0xFF0F4C81),
+                  OnboardingIconContainer(
+                    imagePath: 'assets/images/onbording1.svg',
                   ),
                   const SizedBox(height: 40),
                   const OnboardingContent(
-                    title: 'مرحبا في تطبيق الجرد',
+                    title: "Welcome to FreeTalk",
                     description:
-                        'نظام متكامل لتتبع وإدارة الأصول الحكومية بكل سهولة وفعالية',
+                        'A smart app that helps you communicate using sign language.',
                   ),
                 ],
               ),
