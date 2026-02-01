@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/routing/routes.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/feature/onbording/widget/dotsIndicator.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_content.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_icon_container.dart';
@@ -14,7 +15,7 @@ class OnboardingScreen3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: AppColors.primary,
         child: Column(
           children: [
             OnboardingSkipButton(onTap: () => context.go(Routes.signupScreen)),
@@ -23,15 +24,15 @@ class OnboardingScreen3 extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const OnboardingIconContainer(
-                    icon: Icons.trending_up,
-                    iconColor: Color(0xFF14B8A6),
+                  OnboardingIconContainer(
+                    imagePath: 'assets/images/onbording3.svg',
+                    // iconColor: Color(0xFF14B8A6),
                   ),
                   const SizedBox(height: 40),
                   const OnboardingContent(
-                    title: 'تقارير شاملة ومفصلة',
+                    title: 'Connect Easily',
                     description:
-                        'احصل على تقارير شاملة عن جميع الأصول مع إمكانية التصدير والمشاركة',
+                        'Break communication barriers and connect with confidence.',
                   ),
                 ],
               ),
@@ -40,8 +41,12 @@ class OnboardingScreen3 extends StatelessWidget {
               children: [
                 DotsIndicator(currentDotIndex: 2),
                 OnboardingNavigationButtons(
-                  onPrevious: () => Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen2),
-                  onNext: () => Navigator.of(context).pushReplacementNamed(Routes.signupScreen),
+                  onPrevious: () => Navigator.of(
+                    context,
+                  ).pushNamed(Routes.onboardingScreen2),
+                  onNext: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(Routes.signupScreen),
                   nextButtonLabel: 'إبدأ الآن',
                   nextButtonColor: const Color(0xFF14B8A6),
                 ),
