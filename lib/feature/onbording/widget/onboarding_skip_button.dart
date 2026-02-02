@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class OnboardingSkipButton extends StatelessWidget {
   final VoidCallback onTap;
 
-  const OnboardingSkipButton({
-    super.key,
-    required this.onTap,
-  });
+  const OnboardingSkipButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +15,8 @@ class OnboardingSkipButton extends StatelessWidget {
           child: GestureDetector(
             onTap: onTap,
             child: const Text(
-              'تخطى',
-              style: TextStyle(
-                color: Color(0xFF666666),
-                fontSize: 16,
-              ),
+              'Skip',
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ),
