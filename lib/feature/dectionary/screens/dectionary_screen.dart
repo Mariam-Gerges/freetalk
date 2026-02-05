@@ -46,13 +46,10 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 14,
-                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                 ),
               ),
               const SizedBox(height: 20),
@@ -83,15 +80,6 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
                             ),
                           ],
                         ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Floating Action Button
-              Center(
-                child: FloatingActionButton(
-                  backgroundColor: AppColors.primary,
-                  onPressed: () {},
-                  child: const Icon(Icons.chat, color: Colors.white),
                 ),
               ),
             ],

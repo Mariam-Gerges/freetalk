@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class OnboardingNavigationButtons extends StatelessWidget {
   final VoidCallback onPrevious;
@@ -11,7 +12,7 @@ class OnboardingNavigationButtons extends StatelessWidget {
     super.key,
     required this.onPrevious,
     required this.onNext,
-    this.nextButtonLabel = 'التالي',
+    this.nextButtonLabel = 'Next',
     required this.nextButtonColor,
     this.showPreviousButton = true,
   });
@@ -60,7 +61,7 @@ class OnboardingNavigationButtons extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onNext,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0F4C81),
+                      backgroundColor: AppColors.primaryDark,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

@@ -52,20 +52,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.white,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: AppColors.black),
-          title: const Text(
-            'Forgot Password',
-            style: TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-            ),
-          ),
-          centerTitle: true,
-        ),
+        backgroundColor: AppColors.primary,
+
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: SingleChildScrollView(
@@ -78,7 +66,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const Text(
                     'Reset Password',
                     style: TextStyle(
-                      color: AppColors.primary,
+                      color: AppColors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
@@ -86,10 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   verticalSpace(10),
                   const Text(
                     "Enter your email and we’ll send you a link to reset your password.",
-                    style: TextStyle(
-                      color: AppColors.black,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
                   ),
                   verticalSpace(30),
                   CustomTextFormField(
@@ -97,15 +82,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     hintText: 'Email Address',
                     prefixIcon: Icons.email,
                     validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter your email';
-                      if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value)) {
+                      if (value == null || value.isEmpty)
+                        return 'Enter your email';
+                      if (!RegExp(
+                        r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+                      ).hasMatch(value)) {
                         return 'Enter a valid email';
                       }
                       return null;
                     },
                     border: null,
                   ),
-                  verticalSpace(40),
+                  verticalSpace(16),
                   CustomButton(
                     title: 'Send Reset Link',
                     textColor: AppColors.white,
@@ -127,14 +115,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ? GestureDetector(
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Link sent again")),
+                                const SnackBar(
+                                  content: Text("Link sent again"),
+                                ),
                               );
                               startTimer();
                             },
                             child: const Text(
                               "Send again",
                               style: TextStyle(
-                                color: AppColors.primary,
+                                color: AppColors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -143,7 +133,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         : Text(
                             "You can resend in $timerSeconds sec",
                             style: const TextStyle(
-                              color: AppColors.black,
+                              color: Color(0xFF9CA3AF),
                               fontSize: 15,
                             ),
                           ),

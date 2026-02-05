@@ -18,7 +18,7 @@ class OnboardingScreen3 extends StatelessWidget {
         color: AppColors.primary,
         child: Column(
           children: [
-            OnboardingSkipButton(onTap: () => context.go(Routes.signupScreen)),
+            OnboardingSkipButton(onTap: () => Navigator.of(context).pushNamed(Routes.signupScreen)),
             Expanded(
               flex: 3,
               child: Column(
@@ -47,8 +47,8 @@ class OnboardingScreen3 extends StatelessWidget {
                   onNext: () => Navigator.of(
                     context,
                   ).pushReplacementNamed(Routes.signupScreen),
-                  nextButtonLabel: 'إبدأ الآن',
-                  nextButtonColor: const Color(0xFF14B8A6),
+                  nextButtonLabel: 'Get Started',
+                  nextButtonColor: AppColors.primaryDark,
                 ),
               ],
             ),

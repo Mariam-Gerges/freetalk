@@ -25,7 +25,12 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       decoration: InputDecoration(
-        hintText: hintText,
+          hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
+
+            filled: true,
+            fillColor: Colors.white,
+        
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(

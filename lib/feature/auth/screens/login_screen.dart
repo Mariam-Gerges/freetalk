@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.primary,
         resizeToAvoidBottomInset: true,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Login',
                     style: TextStyle(
-                      color: AppColors.primary,
+                      color: AppColors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -119,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         "Forgot Password?",
                         style: TextStyle(
-                          color: AppColors.primary,
+                          color: AppColors.white,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -155,11 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an account?'),
+                      Text(
+                        'Don\'t have an account?',
+                        style: TextStyle(
+                          color: Color(0xFF9CA3AF),
+                          fontSize: 14,
+                        ),
+                      ),
                       horizontalSpace(6),
                       CustomTextButton(
                         title: 'Sign Up',
-                        textColor: AppColors.primary,
+                        textColor: AppColors.white,
                         onTap: () {
                           Navigator.pushReplacementNamed(
                             context,
@@ -170,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
 
-                  verticalSpace(30),
+                  verticalSpace(16),
                 ],
               ),
             ),

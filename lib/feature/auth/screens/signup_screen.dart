@@ -38,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.primary,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Stack(
@@ -52,30 +53,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         verticalSpace(90),
-                
+
                         /// Title
                         Text(
                           'Create Account',
                           style: TextStyle(
-                            color: AppColors.primary,
+                            color: AppColors.white,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                
+
                         verticalSpace(8),
-                
+
                         /// Login row
                         Row(
                           children: [
                             Text(
                               'Already have an account?',
-                              style: TextStyle(fontSize: 16),
+
+                              style: TextStyle(
+                                color: Color(0xFF9CA3AF),
+                                fontSize: 16,
+                              ),
                             ),
-                
+
                             CustomTextButton(
                               title: 'Login',
-                              textColor: AppColors.primary,
+                              textColor: AppColors.white,
                               onTap: () {
                                 Navigator.pushReplacementNamed(
                                   context,
@@ -85,9 +90,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ],
                         ),
-                
-                        verticalSpace(40),
-                
+
+                        verticalSpace(20),
+
                         /// Username
                         CustomTextFormField(
                           controller: usernameController,
@@ -101,9 +106,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           border: null,
                         ),
-                
+
                         verticalSpace(20),
-                
+
                         /// Email
                         CustomTextFormField(
                           controller: emailController,
@@ -122,9 +127,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           border: null,
                         ),
-                
+
                         verticalSpace(20),
-                
+
                         /// Password
                         CustomTextFormField(
                           controller: passwordController,
@@ -154,9 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           border: null,
                         ),
-                
+
                         verticalSpace(20),
-                
+
                         /// Confirm Password
                         CustomTextFormField(
                           controller: confirmPasswordController,
@@ -184,9 +189,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           border: null,
                         ),
-                
+
                         verticalSpace(35),
-                
+
                         /// Sign Up Button
                         CustomButton(
                           title: 'Sign up',
@@ -196,11 +201,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               final username = usernameController.text;
                               final email = emailController.text;
                               final password = passwordController.text;
-                
+
                               debugPrint('USERNAME: $username');
                               debugPrint('EMAIL: $email');
                               debugPrint('PASSWORD: $password');
-                
+
                               // Navigate to HomeScreen after signup
                               Navigator.pushReplacementNamed(
                                 context,
@@ -210,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           isDarkMode: false,
                         ),
-                
+
                         verticalSpace(30),
                       ],
                     ),
