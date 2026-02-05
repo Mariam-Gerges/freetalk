@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class SplashLogo extends StatefulWidget {
   const SplashLogo({super.key});
@@ -61,8 +62,8 @@ class _SplashLogoState extends State<SplashLogo>
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: SvgPicture.asset('assets/images/logo.svg'),
                 ),

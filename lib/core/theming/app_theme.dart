@@ -22,7 +22,7 @@ class AppTheme {
     fontFamily: "LeagueSpartan",
     useMaterial3: true,
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: AppColors.scaffoldBackgroundDark,
+    scaffoldBackgroundColor: AppColors.primary,
     textTheme: TextTheme(
       displayLarge: AppTextTheme.font32BlackRegular.copyWith(
         color: AppColors.white,
@@ -33,10 +33,14 @@ class AppTheme {
       displaySmall: AppTextTheme.font16BlackRegular.copyWith(
         color: AppColors.white,
       ),
-      bodySmall: AppTextTheme.font22BlackRegular.copyWith(color: AppColors.white),
+      bodySmall: AppTextTheme.font22BlackRegular.copyWith(
+        color: AppColors.white,
+      ),
 
       titleLarge: AppTextTheme.font32BlackBold.copyWith(color: AppColors.white),
-      titleMedium: AppTextTheme.font24BlackBold.copyWith(color: AppColors.white),
+      titleMedium: AppTextTheme.font24BlackBold.copyWith(
+        color: AppColors.white,
+      ),
     ),
   );
 }

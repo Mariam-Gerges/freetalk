@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class OnboardingIconContainer extends StatelessWidget {
   final String imagePath;
@@ -11,7 +12,10 @@ class OnboardingIconContainer extends StatelessWidget {
     return Container(
       width: 130,
       height: 130,
-      decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: SvgPicture.asset(imagePath, fit: BoxFit.contain),
     );
   }

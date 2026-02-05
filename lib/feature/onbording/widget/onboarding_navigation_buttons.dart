@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class OnboardingNavigationButtons extends StatelessWidget {
   final VoidCallback onPrevious;
@@ -11,10 +12,9 @@ class OnboardingNavigationButtons extends StatelessWidget {
     super.key,
     required this.onPrevious,
     required this.onNext,
-    this.nextButtonLabel = 'التالي',
+    this.nextButtonLabel = 'Next',
     required this.nextButtonColor,
     this.showPreviousButton = true,
-
   });
 
   @override
@@ -23,61 +23,60 @@ class OnboardingNavigationButtons extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: showPreviousButton? [
-          SizedBox(
-            width: 100,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: onNext,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: nextButtonColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+        children: showPreviousButton
+            ? [
+                SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: onNext,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: nextButtonColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      nextButtonLabel,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
-              
-              ),
-              child: Text(
-                nextButtonLabel,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
 
-          
-          IconButton(
-            onPressed: onPrevious,
-            icon: const Icon(Icons.arrow_forward),
-            color: const Color(0xFF666666),
-            iconSize: 34,
-          ),
-          
-        ]:[
-          SizedBox(
-            width: 100,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: onNext,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF0F4C81),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                IconButton(
+                  onPressed: onPrevious,
+                  icon: const Icon(Icons.arrow_forward),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  iconSize: 34,
                 ),
-              ),
-              child: Text(
-                nextButtonLabel,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+              ]
+            : [
+                SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: onNext,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryDark,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      nextButtonLabel,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
+              ],
       ),
     );
   }

@@ -66,7 +66,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                   onPrevious: () => _navigateToRoute(Routes.splashScreen),
                   onNext: () => _navigateToRoute(Routes.onboardingScreen2),
                   showPreviousButton: false,
-                  nextButtonColor: const Color(0xFF0F4C81),
+                  nextButtonColor: AppColors.primaryDark,
                 ),
               ],
             ),

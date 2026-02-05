@@ -50,7 +50,7 @@ class OnboardingScreen2 extends StatelessWidget {
                   onNext: () => Navigator.of(
                     context,
                   ).pushReplacementNamed(Routes.onboardingScreen3),
-                  nextButtonColor: const Color(0xFF2563EB),
+                  nextButtonColor: AppColors.primaryDark,
                 ),
               ],
             ),
