@@ -60,7 +60,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
             right: 0,
             child: BottomNavigationBar(
               backgroundColor: AppColors.primary,
-              selectedIconTheme: const IconThemeData(color: Colors.black),
+              selectedIconTheme: const IconThemeData(color: Colors.white),
               unselectedIconTheme: const IconThemeData(color: Colors.white70),
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.white70,
