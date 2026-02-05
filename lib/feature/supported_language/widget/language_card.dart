@@ -5,6 +5,7 @@ class LanguageCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String flagUrl;
+  final VoidCallback? onTap;
 
   const LanguageCard({
     super.key,
@@ -12,15 +13,16 @@ class LanguageCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.flagUrl,
+    required this.onTap,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: () {},
+        onTap: onTap,
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),

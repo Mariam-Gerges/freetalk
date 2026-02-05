@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
 import 'package:freetalk/feature/supported_language/widget/language_card.dart';
@@ -27,6 +28,9 @@ class SupportedLanguage extends StatelessWidget {
               const SizedBox(height: 22),
 
               LanguageCard(
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.translateScreen);
+                },
                 color: const Color(0xFF223EAF),
                 title: 'French (LSF)',
                 subtitle:
@@ -37,6 +41,9 @@ class SupportedLanguage extends StatelessWidget {
               const SizedBox(height: 18),
 
               LanguageCard(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.translateScreen);
+                  },
                 color: const Color(0xFF6E6CA6),
                 title: 'English (ASL)',
                 subtitle:
@@ -47,6 +54,9 @@ class SupportedLanguage extends StatelessWidget {
               const SizedBox(height: 18),
 
               LanguageCard(
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.translateScreen);
+                },
                 color: const Color(0xFF0E8A2F),
                 title: 'Arabic',
                 subtitle:
@@ -59,7 +69,6 @@ class SupportedLanguage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomSheet(),
     );
   }
 }
