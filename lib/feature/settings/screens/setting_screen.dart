@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
+import 'package:freetalk/core/theming/theme_helper.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -11,8 +12,6 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool isDarkMode = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,12 +158,12 @@ class _SettingScreenState extends State<SettingScreen> {
               color: const Color(0xFF4A4A7E),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.dark_mode, color: Colors.white, size: 20),
+            child: Icon(Icons.dark_mode, color: Colors.white, size: 20),
           ),
           const SizedBox(width: 12),
-          const Text(
+          Text(
             'Dark Mode',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
               color: Colors.white,
@@ -174,12 +173,9 @@ class _SettingScreenState extends State<SettingScreen> {
           Transform.scale(
             scale: 0.8,
             child: Switch(
-              value: isDarkMode,
-              onChanged: (value) {
-                setState(() {
-                  isDarkMode = value;
-                });
-              },
+              value: false,
+
+              onChanged: (value) {},
               activeColor: const Color(0xFF4A4A7E),
             ),
           ),
