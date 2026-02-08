@@ -6,7 +6,6 @@ import 'package:freetalk/feature/onbording/widget/onboarding_content.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_icon_container.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_navigation_buttons.dart';
 import 'package:freetalk/feature/onbording/widget/onboarding_skip_button.dart';
-import 'package:go_router/go_router.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
   const OnboardingScreen3({super.key});
