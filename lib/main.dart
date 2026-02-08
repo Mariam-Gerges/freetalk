@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/di/di.dart';
 import 'package:freetalk/core/routing/app_router.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_theme.dart';
 
 void main() {
+  //setupgetit();
   WidgetsFlutterBinding.ensureInitialized();
   // final themeProvider = ThemeProvider();
   // await themeProvider.initializeTheme();
