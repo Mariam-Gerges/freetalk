@@ -21,5 +21,4 @@ abstract class AppColors {
   static const Color egyptian = Color(0xff125C0B);
   static const Color grey = Color(0xffDFDFDF);
 
-  static get accent => null;
 }

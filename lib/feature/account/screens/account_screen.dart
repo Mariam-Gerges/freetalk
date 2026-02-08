@@ -20,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
   final TextEditingController _passwordController = TextEditingController(
     text: '',
   );
-  String? _avatarInitials = 'HE';
+  String? avatarInitials = 'HE';
 
   @override
   void dispose() {
@@ -58,7 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       radius: 50,
                       backgroundColor: Colors.white,
                       child: Text(
-                        _avatarInitials ?? '',
+                        avatarInitials ?? '',
                         style: TextStyle(
                           color: AppColors.primary,
                           fontSize: 28,

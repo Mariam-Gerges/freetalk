@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
-import 'package:freetalk/core/widget/bottom_sheet.dart';
 import 'package:freetalk/feature/supported_language/widget/language_card.dart';
 
 class SupportedLanguage extends StatelessWidget {

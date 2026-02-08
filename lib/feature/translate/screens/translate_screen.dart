@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+// import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -12,9 +12,9 @@ class TranslateScreen extends StatefulWidget {
 
 class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _textController = TextEditingController();
-  late stt.SpeechToText _speech;
-  bool _isListening = false;
-  String _lastWords = '';
+  // late stt.SpeechToText _speech;
+  bool isListening = false;
+  // String _lastWords = '';
 
   @override
   void dispose() {
@@ -95,7 +95,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         // onLongPressUp: _stopListening,
                         child: IconButton(
                           icon: Icon(
-                            _isListening ? Icons.mic : Icons.mic_none,
+                            isListening ? Icons.mic : Icons.mic_none,
                             color: AppColors.primary,
                           ),
                           onPressed: () {
