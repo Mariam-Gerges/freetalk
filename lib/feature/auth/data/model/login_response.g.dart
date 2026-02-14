@@ -9,27 +9,31 @@ part of 'login_response.dart';
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       message: json['message'] as String?,
-      userData: json['userdata'] == null
+      user: json['user'] == null
           ? null
-          : UserData.fromJson(json['userdata'] as Map<String, dynamic>),
-      status: json['status'] as bool?,
-      code: (json['code'] as num?)?.toInt(),
+          : UserData.fromJson(json['user'] as Map<String, dynamic>),
+      token: json['token'] as String?,
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
+      'token': instance.token,
+      'user': instance.user,
       'message': instance.message,
-      'userdata': instance.userData,
-      'status': instance.status,
-      'code': instance.code,
     };
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
-  token: json['token'] as String?,
   userName: json['username'] as String?,
+  email: json['email'] as String?,
+  createdAt: json['createdAt'] == null
+      ? null
+      : DateTime.parse(json['createdAt'] as String),
+  id: (json['id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
-  'token': instance.token,
+  'id': instance.id,
   'username': instance.userName,
+  'email': instance.email,
+  'createdAt': instance.createdAt?.toIso8601String(),
 };
