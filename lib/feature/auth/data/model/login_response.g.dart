@@ -9,9 +9,9 @@ part of 'login_response.dart';
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       message: json['message'] as String?,
-      userData: json['data'] == null
+      userData: json['userdata'] == null
           ? null
-          : UserData.fromJson(json['data'] as Map<String, dynamic>),
+          : UserData.fromJson(json['userdata'] as Map<String, dynamic>),
       status: json['status'] as bool?,
       code: (json['code'] as num?)?.toInt(),
     );
@@ -19,7 +19,7 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'data': instance.userData,
+      'userdata': instance.userData,
       'status': instance.status,
       'code': instance.code,
     };

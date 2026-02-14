@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/di/ingiction.dart';
 import 'package:freetalk/core/routing/app_router.dart';
 import 'package:freetalk/core/routing/routes.dart';
 
 void main() {
+  setupgetit();
   runApp(FreeTalk(appRouter: AppRouter()));
 }
 

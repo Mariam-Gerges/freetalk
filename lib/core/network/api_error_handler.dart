@@ -1,10 +1,9 @@
-class ApiErrorHandler {
-  final String errorMessage;
-  ApiErrorHandler(this.errorMessage);
-}
+import 'package:freetalk/core/network/api_error_model.dart';
 
 class ErrorHandler {
-  static ApiErrorHandler handle(dynamic error) {
-    return ApiErrorHandler(error.toString());
+  static ApiErrorModel handle(dynamic error) {
+    return ApiErrorModel(
+      message: error.toString(),
+    );
   }
 }

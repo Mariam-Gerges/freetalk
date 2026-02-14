@@ -1,0 +1,6 @@
+// {
+//   "username": "string",
+//   "email": "user@example.com",
+//   "password": "string",
+//   "confirmPassword": "string"
+// }
