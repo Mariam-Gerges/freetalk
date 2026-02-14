@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freetalk/core/di/ingiction.dart';
 import 'package:freetalk/feature/account/screens/account_screen.dart';
+import 'package:freetalk/feature/auth/logic/auth_cubit.dart';
 import 'package:freetalk/feature/auth/screens/forget_passward.dart';
 import 'package:freetalk/feature/auth/screens/login_screen.dart';
 import 'package:freetalk/feature/auth/screens/signup_screen.dart';
@@ -32,11 +35,22 @@ class AppRouter {
 
       /// LOGIN SCREEN
       case Routes.loginScreen:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getit<AuthCubit>(),
+            child: const LoginScreen(),
+          ),
+        );
 
       /// SIGNUP SCREEN
       case Routes.signupScreen:
-        return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => getit<AuthCubit>(),
+            child: const SignUpScreen(),
+          ),
+        );
+      
       //FORGET PASSWORD SCREEN
       case Routes.forgotPasswordScreen:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
