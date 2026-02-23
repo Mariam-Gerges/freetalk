@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/di/ingiction.dart';
+import 'package:freetalk/core/network/supabase_client.dart';
 import 'package:freetalk/core/routing/app_router.dart';
-import 'package:freetalk/core/routing/routes.dart';
+import 'package:freetalk/free_talk.dart';
 
-void main() {
+void main() async {
   setupgetit();
+  WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseClientService.init();
   runApp(FreeTalk(appRouter: AppRouter()));
-}
-
-class FreeTalk extends StatelessWidget {
-  const FreeTalk({super.key, required this.appRouter});
-  final AppRouter appRouter;
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-    
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: appRouter.generateRoute,
-      initialRoute: Routes.splashScreen,
-    );
-  }
 }

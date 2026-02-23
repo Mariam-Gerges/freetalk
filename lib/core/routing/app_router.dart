@@ -14,7 +14,7 @@ import 'package:freetalk/feature/onbording/screens/onbording3_screen.dart';
 import 'package:freetalk/feature/settings/screens/setting_screen.dart';
 import 'package:freetalk/feature/splash/screens/splash_screen.dart';
 import 'package:freetalk/feature/supported_language/screens/supported_language.dart';
-import 'package:freetalk/feature/translate/screens/translate_screen.dart';
+import 'package:freetalk/feature/sign_language/screens/sign_language_screen.dart';
 
 import 'routes.dart';
 
@@ -50,14 +50,14 @@ class AppRouter {
             child: const SignUpScreen(),
           ),
         );
-      
+
       //FORGET PASSWORD SCREEN
       case Routes.forgotPasswordScreen:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
       // /// MAIN SCREEN
       case Routes.translateScreen:
-        return MaterialPageRoute(builder: (_) => const TranslateScreen());
+        return MaterialPageRoute(builder: (_) => const SignLanguageScreen());
 
       case Routes.dictionaryScreen:
         return MaterialPageRoute(builder: (_) => const DectionaryScreen());
