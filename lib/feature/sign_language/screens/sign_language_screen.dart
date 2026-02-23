@@ -3,14 +3,14 @@ import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
 // import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-class TranslateScreen extends StatefulWidget {
-  const TranslateScreen({super.key});
+class SignLanguageScreen extends StatefulWidget {
+  const SignLanguageScreen({super.key});
 
   @override
-  State<TranslateScreen> createState() => _TranslateScreenState();
+  State<SignLanguageScreen> createState() => _SignLanguageScreenState();
 }
 
-class _TranslateScreenState extends State<TranslateScreen> {
+class _SignLanguageScreenState extends State<SignLanguageScreen> {
   final TextEditingController _textController = TextEditingController();
   // late stt.SpeechToText _speech;
   bool isListening = false;
@@ -21,8 +21,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
     _textController.dispose();
     super.dispose();
   }
-
-
 
   // void _startListening() async {
   //   bool available = await _speech.initialize();
