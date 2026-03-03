@@ -8,6 +8,10 @@
 	<string>Freetalk</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Needed for converting speech to text in the translation feature</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Needed for converting speech to text in the translation feature also</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

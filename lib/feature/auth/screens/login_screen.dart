@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
           listener: (context, state) {
             state.whenOrNull(
               success: (response) {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   Routes.supportedlanguageScreen,
                 );
@@ -158,20 +158,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         return state.maybeWhen(
                           loading: () => CustomButton(
                             title: 'Loading...',
-                            textColor: null,
-                            onTap: () {
-                               Navigator.pushReplacementNamed(
-                              context,
-                              Routes.translateScreen,
-                            );
-                            },
-                            isDarkMode: false,
+                      onTap: () {
+                        
+                      },
                           ),
                           orElse: () => CustomButton(
                             title: 'Login',
                             textColor: null,
                             onTap: () => _handleLogin(context),
-                            isDarkMode: false,
+          
                           ),
                         );
                       },
@@ -218,8 +213,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void _handleLogin(BuildContext context) {
     if (formKey.currentState!.validate()) {
       final loginRequest = LoginRequestBody(
-        email: emailController.text,
-        password: passwordController.text,
+        usernameOrEmail: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
 
       context.read<AuthCubit>().login(loginRequest);

@@ -5,8 +5,7 @@ part 'login_response.g.dart';
 @JsonSerializable()
 class LoginResponse {
   String? token;
-  // @JsonKey(name: 'user')
-  UserData? user;
+  @JsonKey(name: 'user') UserData? user;
   String? message;
 
   LoginResponse({
@@ -19,7 +18,6 @@ class LoginResponse {
       _$LoginResponseFromJson(json);
 }
 
-@JsonSerializable()
 class UserData {
   int? id;
   @JsonKey(name: 'username')
@@ -45,5 +43,5 @@ class UserData {
   },
   "message": "Login successful"
 }
- 
+
  */

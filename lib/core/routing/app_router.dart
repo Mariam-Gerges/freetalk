@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freetalk/core/di/ingiction.dart';
+
 import 'package:freetalk/feature/account/screens/account_screen.dart';
-import 'package:freetalk/feature/auth/logic/auth_cubit.dart';
+
 import 'package:freetalk/feature/auth/screens/forget_passward.dart';
 import 'package:freetalk/feature/auth/screens/login_screen.dart';
 import 'package:freetalk/feature/auth/screens/signup_screen.dart';
@@ -14,7 +13,7 @@ import 'package:freetalk/feature/onbording/screens/onbording3_screen.dart';
 import 'package:freetalk/feature/settings/screens/setting_screen.dart';
 import 'package:freetalk/feature/splash/screens/splash_screen.dart';
 import 'package:freetalk/feature/supported_language/screens/supported_language.dart';
-import 'package:freetalk/feature/sign_language/screens/sign_language_screen.dart';
+import 'package:freetalk/feature/translate/screens/translate_screen.dart';
 
 import 'routes.dart';
 
@@ -34,22 +33,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const OnboardingScreen3());
 
       /// LOGIN SCREEN
-      case Routes.loginScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getit<AuthCubit>(),
-            child: const LoginScreen(),
-          ),
-        );
-
-      /// SIGNUP SCREEN
-      case Routes.signupScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => getit<AuthCubit>(),
-            child: const SignUpScreen(),
-          ),
-        );
+    case Routes.loginScreen:
+  return MaterialPageRoute(
+    builder: (_) => const LoginScreen(),
+  );
+// SIGNUP SCREEN
+case Routes.signupScreen:
+  return MaterialPageRoute(
+    builder: (_) => const SignUpScreen(),
+  );
 
       //FORGET PASSWORD SCREEN
       case Routes.forgotPasswordScreen:
@@ -57,7 +49,7 @@ class AppRouter {
 
       // /// MAIN SCREEN
       case Routes.translateScreen:
-        return MaterialPageRoute(builder: (_) => const SignLanguageScreen());
+        return MaterialPageRoute(builder: (_) => const TranslateScreen());
 
       case Routes.dictionaryScreen:
         return MaterialPageRoute(builder: (_) => const DectionaryScreen());
