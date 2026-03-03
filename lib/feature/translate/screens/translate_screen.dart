@@ -1,45 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
-// import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_to_text/speech_to_text.dart';
 
-class SignLanguageScreen extends StatefulWidget {
-  const SignLanguageScreen({super.key});
+class TranslateScreen extends StatefulWidget {
+  const TranslateScreen({super.key});
 
   @override
-  State<SignLanguageScreen> createState() => _SignLanguageScreenState();
+  State<TranslateScreen> createState() => _TranslateScreenState();
 }
 
-class _SignLanguageScreenState extends State<SignLanguageScreen> {
+class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _textController = TextEditingController();
-  // late stt.SpeechToText _speech;
+
+  late SpeechToText speech;
   bool isListening = false;
-  // String _lastWords = '';
+  String recognizedText = '';
+  @override
+  void initState() {
+    super.initState();
+    initSpeechtotext();
+  }
+
+  Future<void> initSpeechtotext() async {
+    speech = SpeechToText();
+    bool available = await speech.initialize();
+    if (!available) {
+      setState(() {
+        isListening = false;
+      });
+    }
+  }
+  void startListening() async {
+  bool available = await speech.initialize();
+
+  if (available) {
+    setState(() {
+      isListening = true;
+    });
+
+    speech.listen(
+      onResult: (result) {
+        setState(() {
+          _textController.text = result.recognizedWords;
+          _textController.selection = TextSelection.fromPosition(
+            TextPosition(offset: _textController.text.length),
+          );
+        });
+      },
+    );
+  }
+}
+  void stopListening() {
+    if (isListening) {
+      speech.stop();
+      setState(() {
+        isListening = false;
+      });
+    }
+  }
 
   @override
   void dispose() {
     _textController.dispose();
     super.dispose();
   }
-
-  // void _startListening() async {
-  //   bool available = await _speech.initialize();
-  //   if (!available) return;
-  //   setState(() => _isListening = true);
-  //   _speech.listen(
-  //     onResult: (val) {
-  //       setState(() {
-  //         _lastWords = val.recognizedWords;
-  //         _textController.text = _lastWords;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // void _stopListening() {
-  //   _speech.stop();
-  //   setState(() => _isListening = false);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +97,6 @@ class _SignLanguageScreenState extends State<SignLanguageScreen> {
                       Expanded(
                         child: TextField(
                           controller: _textController,
-
                           decoration: InputDecoration(
                             hintText: 'Type or speak to translate',
                             hintStyle: const TextStyle(color: Colors.grey),
@@ -88,22 +112,18 @@ class _SignLanguageScreenState extends State<SignLanguageScreen> {
                         ),
                         onPressed: () {},
                       ),
-                      GestureDetector(
-                        // onLongPress: _startListening,
-                        // onLongPressUp: _stopListening,
-                        child: IconButton(
-                          icon: Icon(
-                            isListening ? Icons.mic : Icons.mic_none,
-                            color: AppColors.primary,
-                          ),
-                          onPressed: () {
-                            // if (_isListening) {
-                            //   _stopListening();
-                            // } else {
-                            //   _startListening();
-                            // }
-                          },
+                      IconButton(
+                        icon: Icon(
+                        isListening ? Icons.mic : Icons.mic_none,
+                          color: AppColors.primary,
                         ),
+                        onPressed: () {
+                            if (isListening) {
+                            stopListening();
+                            } else {
+                            startListening();
+                          }
+                        },
                       ),
                     ],
                   ),

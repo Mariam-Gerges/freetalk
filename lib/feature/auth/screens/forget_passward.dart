@@ -97,7 +97,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   CustomButton(
                     title: 'Send Reset Link',
                     textColor: AppColors.white,
-                    isDarkMode: false,
+                 
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(

@@ -225,13 +225,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       Routes.supportedlanguageScreen,
                                     );
                                   },
-                                  isDarkMode: false,
+                               
                                 ),
                                 orElse: () => CustomButton(
                                   title: 'Sign up',
                                   textColor: null,
                                   onTap: () => _handleSignUp(context),
-                                  isDarkMode: false,
+                               
                                 ),
                               );
                             },

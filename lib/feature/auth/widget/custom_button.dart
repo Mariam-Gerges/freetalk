@@ -4,14 +4,14 @@ import 'package:freetalk/core/theming/app_colors.dart';
 class CustomButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
-  final bool isDarkMode;
+
   final Color? textColor;
 
   const CustomButton({
     super.key,
     required this.title,
     required this.onTap,
-    required this.isDarkMode,
+
     this.textColor,
   });
 
