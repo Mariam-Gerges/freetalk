@@ -51,20 +51,15 @@ class _SettingScreenState extends State<SettingScreen> {
                 iconColor: const Color(0xFFFFA500),
                 title: 'Edit Profile',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Edit Profile tapped')),
-                  );
-                },
+                Navigator.of(context).pushNamed(Routes.accountScreen);
+                  },
               ),
               _buildSettingItem(
                 icon: Icons.lock,
                 iconColor: const Color(0xFF1E90FF),
                 title: 'Change Password',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Change Password tapped')),
-                  );
-                },
+                  Navigator.of(context) .pushNamed(Routes.changePasswordScreen);},
               ),
               const SizedBox(height: 8),
               _buildSettingItem(

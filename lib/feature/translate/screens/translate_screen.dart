@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class TranslateScreen extends StatefulWidget {
@@ -59,6 +62,23 @@ class _TranslateScreenState extends State<TranslateScreen> {
       });
     }
   }
+  File? selectedImage;
+final ImagePicker picker = ImagePicker();
+
+Future<void> pickImageFromCamera() async {
+  final XFile? image = await picker.pickImage(
+    source: ImageSource.camera,
+  );
+
+  if (image != null) {
+    setState(() {
+      selectedImage = File(image.path);
+    });
+
+    // هنا هنشغل AI model
+    //recognizeSign(selectedImage!);
+  }
+}
 
   @override
   void dispose() {
@@ -110,7 +130,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           Icons.camera_alt,
                           color: AppColors.primary,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          pickImageFromCamera();
+                        },
                       ),
                       IconButton(
                         icon: Icon(
