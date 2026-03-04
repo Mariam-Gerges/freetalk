@@ -5,6 +5,7 @@ import 'package:freetalk/feature/account/screens/account_screen.dart';
 import 'package:freetalk/feature/auth/screens/forget_passward.dart';
 import 'package:freetalk/feature/auth/screens/login_screen.dart';
 import 'package:freetalk/feature/auth/screens/signup_screen.dart';
+import 'package:freetalk/feature/change_passward/change_password_screen.dart';
 import 'package:freetalk/feature/chat_bot/screen/chat_bot.dart';
 import 'package:freetalk/feature/dectionary/screens/dectionary_screen.dart';
 import 'package:freetalk/feature/onbording/screens/onbording1_screen.dart';
@@ -62,6 +63,10 @@ case Routes.signupScreen:
 
       case Routes.supportedlanguageScreen:
         return MaterialPageRoute(builder: (_) => const SupportedLanguage());
+        case Routes.changePasswordScreen:
+  return MaterialPageRoute(
+    builder: (_) => const ChangePasswordScreen(),
+  );
       default:
         return MaterialPageRoute(
           builder: (_) =>

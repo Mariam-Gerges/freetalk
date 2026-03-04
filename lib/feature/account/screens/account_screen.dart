@@ -15,12 +15,12 @@ class _AccountScreenState extends State<AccountScreen> {
     text: 'user@example.com',
   );
   final TextEditingController _nameController = TextEditingController(
-    text: 'Hisham Esam',
+    text: 'Mariam Gerges',
   );
   final TextEditingController _passwordController = TextEditingController(
     text: '',
   );
-  String? avatarInitials = 'HE';
+  String? avatarInitials = 'MG';
 
   @override
   void dispose() {
@@ -301,6 +301,44 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 32),
+
+const Text(
+  'About App',
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  ),
+),
+const SizedBox(height: 12),
+
+Container(
+  decoration: BoxDecoration(
+    color: const Color(0xFF7C6FB5),
+    borderRadius: BorderRadius.circular(12),
+  ),
+  padding: const EdgeInsets.all(16),
+  child: const Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        'Version',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+        ),
+      ),
+      Text(
+        '1.0.0',
+        style: TextStyle(
+          color: Colors.white70,
+          fontSize: 14,
+        ),
+      ),
+    ],
+  ),
+),
               const SizedBox(height: 24),
               Row(
                 children: [

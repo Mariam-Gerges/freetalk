@@ -12,6 +12,6 @@ abstract class Routes {
   static const String dictionaryScreen = "dictionaryScreen";
   static const String settingsScreen = "settingsScreen";
   static const String chatbotScreen = "chatbotScreen";
-
+  static const String changePasswordScreen = "changePassword";
   // static Null get mainHomeScreen => null;
 }
