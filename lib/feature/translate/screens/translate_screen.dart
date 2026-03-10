@@ -5,6 +5,7 @@ import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -16,9 +17,45 @@ class TranslateScreen extends StatefulWidget {
 class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _textController = TextEditingController();
 
+  /// list of images that will appear on screen
+  List<String> resultImages = [];
+
+  /// selected language (غيريها حسب اللغة اللي جاية من صفحة الاختيار)
+  String selectedLanguage = "en";
+
+  /// get image url from Supabase
+  Future<String?> getSignImage(String letter, String language) async {
+    final response = await Supabase.instance.client
+        .from('sign_letters')
+        .select('image_url')
+        .eq('letter', letter)
+        .eq('language', language)
+        .maybeSingle();
+
+    return response?['image_url'];
+  }
+
+  /// convert word to sign images
+  Future<void> convertWordToSigns(String word) async {
+    resultImages.clear();
+
+    for (int i = 0; i < word.length; i++) {
+      String letter = word[i].toLowerCase();
+
+      String? image = await getSignImage(letter, selectedLanguage);
+
+      if (image != null) {
+        resultImages.add(image);
+      }
+    }
+
+    setState(() {});
+  }
+
+  /// speech to text
   late SpeechToText speech;
   bool isListening = false;
-  String recognizedText = '';
+
   @override
   void initState() {
     super.initState();
@@ -28,57 +65,64 @@ class _TranslateScreenState extends State<TranslateScreen> {
   Future<void> initSpeechtotext() async {
     speech = SpeechToText();
     bool available = await speech.initialize();
+
     if (!available) {
       setState(() {
         isListening = false;
       });
     }
   }
+
   void startListening() async {
-  bool available = await speech.initialize();
+    bool available = await speech.initialize();
 
-  if (available) {
-    setState(() {
-      isListening = true;
-    });
+    if (available) {
+      setState(() {
+        isListening = true;
+      });
 
-    speech.listen(
-      onResult: (result) {
-        setState(() {
-          _textController.text = result.recognizedWords;
-          _textController.selection = TextSelection.fromPosition(
-            TextPosition(offset: _textController.text.length),
-          );
-        });
-      },
-    );
+      speech.listen(
+        onResult: (result) {
+          setState(() {
+            _textController.text = result.recognizedWords;
+
+            _textController.selection = TextSelection.fromPosition(
+              TextPosition(offset: _textController.text.length),
+            );
+          });
+
+          convertWordToSigns(_textController.text);
+        },
+      );
+    }
   }
-}
+
   void stopListening() {
     if (isListening) {
       speech.stop();
+
       setState(() {
         isListening = false;
       });
     }
   }
+
+  /// camera
   File? selectedImage;
-final ImagePicker picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
 
-Future<void> pickImageFromCamera() async {
-  final XFile? image = await picker.pickImage(
-    source: ImageSource.camera,
-  );
+  Future<void> pickImageFromCamera() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
 
-  if (image != null) {
-    setState(() {
-      selectedImage = File(image.path);
-    });
+    if (image != null) {
+      setState(() {
+        selectedImage = File(image.path);
+      });
 
-    // هنا هنشغل AI model
-    //recognizeSign(selectedImage!);
+      // هنا بعدين ممكن تشغلي AI model
+      // recognizeSign(selectedImage!);
+    }
   }
-}
 
   @override
   void dispose() {
@@ -105,11 +149,12 @@ Future<void> pickImageFromCamera() async {
                 ),
               ),
               const SizedBox(height: 16),
+
+              /// text input
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Row(
@@ -117,13 +162,18 @@ Future<void> pickImageFromCamera() async {
                       Expanded(
                         child: TextField(
                           controller: _textController,
-                          decoration: InputDecoration(
+                          onChanged: (value) {
+                            convertWordToSigns(value);
+                          },
+                          decoration: const InputDecoration(
                             hintText: 'Type or speak to translate',
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
                         ),
                       ),
+
+                      /// camera button
                       IconButton(
                         tooltip: 'Camera input',
                         icon: const Icon(
@@ -134,15 +184,17 @@ Future<void> pickImageFromCamera() async {
                           pickImageFromCamera();
                         },
                       ),
+
+                      /// mic button
                       IconButton(
                         icon: Icon(
-                        isListening ? Icons.mic : Icons.mic_none,
+                          isListening ? Icons.mic : Icons.mic_none,
                           color: AppColors.primary,
                         ),
                         onPressed: () {
-                            if (isListening) {
+                          if (isListening) {
                             stopListening();
-                            } else {
+                          } else {
                             startListening();
                           }
                         },
@@ -151,8 +203,10 @@ Future<void> pickImageFromCamera() async {
                   ),
                 ),
               ),
+
               const SizedBox(height: 20),
-              // Sign Language / Result Display
+
+              /// result area
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -160,34 +214,32 @@ Future<void> pickImageFromCamera() async {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(padding: const EdgeInsets.all(16.0)),
-                      Expanded(
-                        child: Center(
-                          child: _textController.text.isEmpty
-                              ? const Text(
-                                  'Sign language images will appear here',
-                                  style: TextStyle(color: Colors.grey),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(
-                                    _textController.text,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black87,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ],
+                  child: Center(
+                    child: _textController.text.isEmpty
+                        ? const Text(
+                            'Sign language images will appear here',
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: resultImages.map((imageUrl) {
+                                return Image.network(
+                                  imageUrl,
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.contain,
+                                );
+                              }).toList(),
+                            ),
+                          ),
                   ),
                 ),
               ),
+
               const SizedBox(height: 12),
             ],
           ),
