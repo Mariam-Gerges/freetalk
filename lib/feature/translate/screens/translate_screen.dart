@@ -37,20 +37,28 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
   /// convert word to sign images
   Future<void> convertWordToSigns(String word) async {
-    resultImages.clear();
+  resultImages.clear();
 
-    for (int i = 0; i < word.length; i++) {
-      String letter = word[i].toLowerCase();
+  print("word: $word");
 
-      String? image = await getSignImage(letter, selectedLanguage);
+  for (int i = 0; i < word.length; i++) {
+    String letter = word[i].trim().toLowerCase();
 
-      if (image != null) {
-        resultImages.add(image);
-      }
+    print("letter: $letter");
+
+    String? image = await getSignImage(letter, selectedLanguage);
+
+    print("image: $image");
+
+    if (image != null) {
+      resultImages.add(image);
     }
-
-    setState(() {});
   }
+
+  print("resultImages: $resultImages");
+
+  setState(() {});
+}
 
   /// speech to text
   late SpeechToText speech;
