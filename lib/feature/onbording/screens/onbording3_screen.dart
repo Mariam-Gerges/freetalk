@@ -45,7 +45,7 @@ class OnboardingScreen3 extends StatelessWidget {
                   ).pushNamed(Routes.onboardingScreen2),
                   onNext: () => Navigator.of(
                     context,
-                  ).pushReplacementNamed(Routes.translateScreen),
+                  ).pushReplacementNamed(Routes.supportedlanguageScreen),
                   nextButtonLabel: 'Get Started',
                   nextButtonColor: AppColors.primaryDark,
                 ),
