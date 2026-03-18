@@ -28,7 +28,7 @@ class SupportedLanguage extends StatelessWidget {
 
               LanguageCard(
                 onTap: () {
-                  Navigator.of(context).pushNamed(Routes.translateScreen);
+                  Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'en');
                 },
                 color: const Color(0xFF223EAF),
                 title: 'French (LSF)',
@@ -41,7 +41,7 @@ class SupportedLanguage extends StatelessWidget {
 
               LanguageCard(
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.translateScreen);
+                    Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'en');
                   },
                 color: const Color(0xFF6E6CA6),
                 title: 'English (ASL)',
@@ -54,7 +54,7 @@ class SupportedLanguage extends StatelessWidget {
 
               LanguageCard(
                 onTap: () {
-                  Navigator.of(context).pushNamed(Routes.translateScreen);
+                  Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'ar');
                 },
                 color: const Color(0xFF0E8A2F),
                 title: 'Arabic',

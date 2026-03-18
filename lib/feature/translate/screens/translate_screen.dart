@@ -17,50 +17,55 @@ class TranslateScreen extends StatefulWidget {
 class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _textController = TextEditingController();
 
-  /// list of images that will appear on screen
   List<String> resultImages = [];
-
-  /// selected language (غيريها حسب اللغة اللي جاية من صفحة الاختيار)
   String selectedLanguage = "en";
-
-  /// get image url from Supabase
-  Future<String?> getSignImage(String letter, String language) async {
+  Map<String, String> lettersMap = {};
+  Future<void> loadLetters() async {
     final response = await Supabase.instance.client
         .from('sign_letters')
-        .select('image_url')
-        .eq('letter', letter)
-        .eq('language', language)
-        .maybeSingle();
+        .select()
+        .eq('language', selectedLanguage);
 
-    return response?['image_url'];
+    lettersMap.clear();
+
+    for (var item in response) {
+      lettersMap[item['letter']] = item['image_url'];
+    }
+
+    print("Loaded letters: $lettersMap");
   }
 
-  /// convert word to sign images
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    if (args != null) {
+      selectedLanguage = args as String;
+    }
+
+    print("Selected Language: $selectedLanguage");
+
+    loadLetters(); 
+  }
   Future<void> convertWordToSigns(String word) async {
   resultImages.clear();
 
-  print("word: $word");
-
   for (int i = 0; i < word.length; i++) {
-    String letter = word[i].trim().toLowerCase();
+    String letter = word[i];
 
-    print("letter: $letter");
+    if (selectedLanguage == "en") {
+      letter = letter.toLowerCase();
+    }
 
-    String? image = await getSignImage(letter, selectedLanguage);
-
-    print("image: $image");
-
-    if (image != null) {
-      resultImages.add(image);
+    if (lettersMap.containsKey(letter)) {
+      resultImages.add(lettersMap[letter]!);
     }
   }
 
-  print("resultImages: $resultImages");
-
   setState(() {});
 }
-
-  /// speech to text
   late SpeechToText speech;
   bool isListening = false;
 
@@ -127,8 +132,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
         selectedImage = File(image.path);
       });
 
-      // هنا بعدين ممكن تشغلي AI model
-      // recognizeSign(selectedImage!);
+      // AI model بعدين
     }
   }
 
@@ -156,9 +160,18 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
+
+              const SizedBox(height: 8),
+
+              /// عرض اللغة المختارة
+              Text(
+                "Language: $selectedLanguage",
+                style: const TextStyle(color: Colors.white70),
+              ),
+
               const SizedBox(height: 16),
 
-              /// text input
+              /// input
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -175,36 +188,26 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           },
                           decoration: const InputDecoration(
                             hintText: 'Type or speak to translate',
-                            hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
                         ),
                       ),
 
-                      /// camera button
                       IconButton(
-                        tooltip: 'Camera input',
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: AppColors.primary,
-                        ),
-                        onPressed: () {
-                          pickImageFromCamera();
-                        },
+                        icon: const Icon(Icons.camera_alt,
+                            color: AppColors.primary),
+                        onPressed: pickImageFromCamera,
                       ),
 
-                      /// mic button
                       IconButton(
                         icon: Icon(
                           isListening ? Icons.mic : Icons.mic_none,
                           color: AppColors.primary,
                         ),
                         onPressed: () {
-                          if (isListening) {
-                            stopListening();
-                          } else {
-                            startListening();
-                          }
+                          isListening
+                              ? stopListening()
+                              : startListening();
                         },
                       ),
                     ],
@@ -214,7 +217,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
               const SizedBox(height: 20),
 
-              /// result area
+              /// result
               Expanded(
                 child: Container(
                   width: double.infinity,
@@ -229,7 +232,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             style: TextStyle(color: Colors.grey),
                           )
                         : Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16),
                             child: Wrap(
                               alignment: WrapAlignment.center,
                               spacing: 10,
@@ -247,8 +250,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 12),
             ],
           ),
         ),
