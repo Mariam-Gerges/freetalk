@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
-import 'package:freetalk/core/widget/bottom_sheet.dart';
+import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class ChatBot extends StatefulWidget {
   const ChatBot({super.key});
@@ -11,6 +12,26 @@ class ChatBot extends StatefulWidget {
 
 class _ChatBotState extends State<ChatBot> {
   final TextEditingController _messageController = TextEditingController();
+  late final GenerativeModel _model;
+  late final ChatSession _chat;
+  bool _isTyping = false;
+
+  @override
+  void initState() {
+    super.initState();
+    const apiKey = 'AIzaSyC-YQyRw75EnZeFm3IGVjTjLRSg514OPNQ ';
+
+    _model = GenerativeModel(
+      model: 'gemini-2.5-flash',
+      apiKey: apiKey.trim(),
+      systemInstruction: Content.system(
+        'أنت مساعد ذكي اسمه (FreeTalk Assistant) متخصص في مساعدة الصم وتعليم لغة الإشارة. '
+        'قدم إجابات تفصيلية، واضحة، ومفيدة جداً. لا تكرر الترحيب في كل رسالة بل أجب على سؤال المستخدم مباشرة.',
+      ),
+    );
+    _chat = _model.startChat();
+  }
+
   final List<ChatMessage> _messages = [
     ChatMessage(
       text: 'Hello! 👋 How can I help you today?',
@@ -19,33 +40,48 @@ class _ChatBotState extends State<ChatBot> {
     ),
   ];
 
-  void _sendMessage() {
-    if (_messageController.text.trim().isEmpty) return;
+  void _sendMessage() async {
+    final userMessage = _messageController.text.trim();
+    if (userMessage.isEmpty) return;
 
     setState(() {
       _messages.add(
-        ChatMessage(
-          text: _messageController.text,
-          isBot: false,
-          timestamp: DateTime.now(),
-        ),
+        ChatMessage(text: userMessage, isBot: false, timestamp: DateTime.now()),
       );
+      _isTyping = true;
     });
 
     _messageController.clear();
 
-    // Simulate bot response
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        _messages.add(
-          ChatMessage(
-            text: 'Thanks for your message! I\'m here to help.',
-            isBot: true,
-            timestamp: DateTime.now(),
-          ),
-        );
-      });
-    });
+    try {
+      final response = await _chat.sendMessage(Content.text(userMessage));
+      if (mounted) {
+        setState(() {
+          _isTyping = false;
+          _messages.add(
+            ChatMessage(
+              text: response.text ?? 'Sorry, I couldn\'t generate a response.',
+              isBot: true,
+              timestamp: DateTime.now(),
+            ),
+          );
+        });
+      }
+    } catch (e) {
+      debugPrint('Gemini Error: $e');
+      if (mounted) {
+        setState(() {
+          _isTyping = false;
+          _messages.add(
+            ChatMessage(
+              text: 'عفواً، حدث خطأ: $e',
+              isBot: true,
+              timestamp: DateTime.now(),
+            ),
+          );
+        });
+      }
+    }
   }
 
   @override
@@ -76,9 +112,12 @@ class _ChatBotState extends State<ChatBot> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              itemCount: _messages.length,
+              itemCount: _messages.length + (_isTyping ? 1 : 0),
               reverse: false,
               itemBuilder: (context, index) {
+                if (index == _messages.length) {
+                  return _buildTypingIndicator();
+                }
                 final message = _messages[index];
                 return _buildChatBubble(message);
               },
@@ -87,7 +126,7 @@ class _ChatBotState extends State<ChatBot> {
           _buildMessageInputField(),
         ],
       ),
-      bottomNavigationBar: const CustomBottomSheet(),
+      bottomNavigationBar: const CustomBottomNavigationBar(initialIndex: 2),
     );
   }
 
@@ -150,6 +189,61 @@ class _ChatBotState extends State<ChatBot> {
               backgroundColor: Colors.white70,
               child: const Text('👤', style: TextStyle(fontSize: 20)),
             ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const CircleAvatar(
+            radius: 18,
+            backgroundColor: Colors.white24,
+            child: Text('🤖', style: TextStyle(fontSize: 20)),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    '......',
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

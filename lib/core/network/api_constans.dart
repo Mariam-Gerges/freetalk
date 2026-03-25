@@ -7,7 +7,7 @@ class ApiConstants {
   static const String forgetPassword = 'api/Auth/forget-password';
   static const String passwordReset = 'api/Auth/reset-password';
   static const String registerAdmin = 'api/Auth/register-admin';
-  static const String google = 'api/Auth/google';
-  static const String facebook = 'api/Auth/facebook';
+  static const String profile = 'api/Users/profile';
+
   // static const String refreshToken = 'auth/refresh-token';
 }

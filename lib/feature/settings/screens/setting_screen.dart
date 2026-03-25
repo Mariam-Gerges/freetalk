@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
-import 'package:freetalk/core/widget/bottom_sheet.dart';
+import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -51,15 +51,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 iconColor: const Color(0xFFFFA500),
                 title: 'Edit Profile',
                 onTap: () {
-                Navigator.of(context).pushNamed(Routes.accountScreen);
-                  },
+                  Navigator.of(context).pushNamed(Routes.accountScreen);
+                },
               ),
               _buildSettingItem(
                 icon: Icons.lock,
                 iconColor: const Color(0xFF1E90FF),
                 title: 'Change Password',
                 onTap: () {
-                  Navigator.of(context) .pushNamed(Routes.changePasswordScreen);},
+                  Navigator.of(context).pushNamed(Routes.changePasswordScreen);
+                },
               ),
               const SizedBox(height: 8),
               _buildSettingItem(
@@ -76,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomSheet(),
+      bottomNavigationBar: const CustomBottomNavigationBar(initialIndex: 3),
     );
   }
 
@@ -290,7 +291,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ],
         );
-      },
+      },  
     );
   }
 }

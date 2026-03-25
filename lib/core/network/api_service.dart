@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:freetalk/core/network/api_constans.dart';
+import 'package:freetalk/feature/account/data/model/profile_model.dart';
 import 'package:freetalk/feature/auth/data/model/login_request_body.dart';
 import 'package:freetalk/feature/auth/data/model/login_response.dart';
 import 'package:freetalk/feature/auth/data/model/register_request_body.dart';
@@ -15,4 +16,7 @@ abstract class ApiService {
 
   @POST(ApiConstants.register)
   Future<LoginResponse> register(@Body() RegisterRequestBody requestBody);
+
+  @GET(ApiConstants.profile)
+  Future<ProfileModel> getProfile();
 }

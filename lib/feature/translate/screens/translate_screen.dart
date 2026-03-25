@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
-import 'package:freetalk/core/widget/bottom_sheet.dart';
+import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -18,8 +18,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _textController = TextEditingController();
 
   List<String> resultImages = [];
-  String selectedLanguage = "en";
+  static String globalSelectedLanguage = "ar";
+  String selectedLanguage = globalSelectedLanguage;
   Map<String, String> lettersMap = {};
+
   Future<void> loadLetters() async {
     final response = await Supabase.instance.client
         .from('sign_letters')
@@ -31,8 +33,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
     for (var item in response) {
       lettersMap[item['letter']] = item['image_url'];
     }
-
-    print("Loaded letters: $lettersMap");
   }
 
   @override
@@ -43,29 +43,36 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
     if (args != null) {
       selectedLanguage = args as String;
+      globalSelectedLanguage =
+          selectedLanguage; // حفظ اللغة المختارة على مستوى التطبيق
+    } else {
+      selectedLanguage =
+          globalSelectedLanguage; // استرجاع اللغة في المرات القادمة
     }
 
     print("Selected Language: $selectedLanguage");
 
-    loadLetters(); 
+    loadLetters();
   }
+
   Future<void> convertWordToSigns(String word) async {
-  resultImages.clear();
+    resultImages.clear();
 
-  for (int i = 0; i < word.length; i++) {
-    String letter = word[i];
+    for (int i = 0; i < word.length; i++) {
+      String letter = word[i];
 
-    if (selectedLanguage == "en") {
-      letter = letter.toLowerCase();
+      if (selectedLanguage == "en") {
+        letter = letter.toLowerCase();
+      }
+
+      if (lettersMap.containsKey(letter)) {
+        resultImages.add(lettersMap[letter]!);
+      }
     }
 
-    if (lettersMap.containsKey(letter)) {
-      resultImages.add(lettersMap[letter]!);
-    }
+    setState(() {});
   }
 
-  setState(() {});
-}
   late SpeechToText speech;
   bool isListening = false;
 
@@ -163,14 +170,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
               const SizedBox(height: 8),
 
-              /// عرض اللغة المختارة
-              Text(
-                "Language: $selectedLanguage",
-                style: const TextStyle(color: Colors.white70),
-              ),
-
-              const SizedBox(height: 16),
-
               /// input
               Card(
                 shape: RoundedRectangleBorder(
@@ -194,8 +193,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       ),
 
                       IconButton(
-                        icon: const Icon(Icons.camera_alt,
-                            color: AppColors.primary),
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: AppColors.primary,
+                        ),
                         onPressed: pickImageFromCamera,
                       ),
 
@@ -205,9 +206,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           color: AppColors.primary,
                         ),
                         onPressed: () {
-                          isListening
-                              ? stopListening()
-                              : startListening();
+                          isListening ? stopListening() : startListening();
                         },
                       ),
                     ],
@@ -254,7 +253,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomSheet(),
+      bottomNavigationBar: const CustomBottomNavigationBar(initialIndex: 0),
     );
   }
 }

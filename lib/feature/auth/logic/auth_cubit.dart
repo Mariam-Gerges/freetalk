@@ -4,6 +4,7 @@ import 'package:freetalk/feature/auth/data/model/login_request_body.dart';
 import 'package:freetalk/feature/auth/data/model/register_request_body.dart';
 import 'package:freetalk/feature/auth/data/repos/auth_repo.dart';
 import 'package:freetalk/feature/auth/logic/auth_cubit_state.dart';
+import 'package:freetalk/core/network/secure_storage.dart';
 
 class AuthCubit extends Cubit<AuthCubitState> {
   final AuthRepo authRepo;
@@ -16,7 +17,10 @@ class AuthCubit extends Cubit<AuthCubitState> {
     final response = await authRepo.login(loginRequestBody);
 
     response.when(
-      success: (response) {
+      success: (response) async {
+        if (response.token != null) {
+          await SecureStorage.saveToken(response.token!);
+        }
         emit(AuthCubitState.success(response));
       },
       failure: (errorHandler) {
@@ -31,7 +35,10 @@ Future<void> register(RegisterRequestBody registerRequestBody) async {
   final response = await authRepo.register(registerRequestBody);
 
   response.when(
-    success: (response) {
+    success: (response) async {
+      if (response.token != null) {
+        await SecureStorage.saveToken(response.token!);
+      }
       emit(AuthCubitState.success(response));
     },
     failure: (errorHandler) {

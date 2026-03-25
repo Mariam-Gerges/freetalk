@@ -1,35 +1,48 @@
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:freetalk/core/network/api_constans.dart';
+import 'package:freetalk/core/network/secure_storage.dart';
 
 class DioFactory {
-  DioFactory._();
-  static Dio? dio;
-
-  static Dio getDio() {
-    Duration timeout = const Duration(seconds: 30);
-
-    if (dio == null) {
-      dio = Dio();
-      dio!
-        ..options.connectTimeout = timeout
-        ..options.receiveTimeout = timeout;
-      addDioInterceptors();
-      return dio!;
-    } else {
-      return dio!;
-    }
-  }
-
-  static void addDioInterceptors() {
-    dio!.interceptors.add(
-      PrettyDioLogger(
-        requestBody: true,
-        requestHeader: true,
-        responseHeader: true,
-        // responseBody: true,
-        // error: true,
-        // compact: false,
+  static Dio createDio() {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.apiBaseUrl,
+        receiveDataWhenStatusError: true,
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15),
+        headers: {"Content-Type": "application/json"},
       ),
     );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await SecureStorage.getToken();
+
+          if (token != null &&
+              !options.path.contains(ApiConstants.login) &&
+              !options.path.contains(ApiConstants.register)
+          // !options.path.contains("/auth/verify") &&
+          // !options.path.contains("/auth/resend-verification")
+          ) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
+
+          handler.next(options);
+        },
+
+        onError: (error, handler) async {
+          if (error.response?.statusCode == 401) {
+            await SecureStorage.deleteToken();
+          }
+
+          handler.next(error);
+        },
+      ),
+    );
+
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
+    return dio;
   }
 }

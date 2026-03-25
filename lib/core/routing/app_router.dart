@@ -50,7 +50,7 @@ case Routes.signupScreen:
 
       // /// MAIN SCREEN
       case Routes.translateScreen:
-        return MaterialPageRoute(builder: (_) => const TranslateScreen());
+        return MaterialPageRoute(builder: (_) => const TranslateScreen(), settings: settings);
 
       case Routes.dictionaryScreen:
         return MaterialPageRoute(builder: (_) => const DectionaryScreen());

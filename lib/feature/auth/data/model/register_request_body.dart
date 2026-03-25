@@ -19,9 +19,3 @@ class RegisterRequestBody {
   Map<String, dynamic> toJson() => _$RegisterRequestBodyToJson(this);
 }
 
-// {
-//   "username": "string",
-//   "email": "user@example.com",
-//   "password": "string",
-//   "confirmPassword": "string"
-// }

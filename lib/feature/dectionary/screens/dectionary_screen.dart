@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
-import 'package:freetalk/core/widget/bottom_sheet.dart';
+import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
 
 class DectionaryScreen extends StatefulWidget {
   const DectionaryScreen({super.key});
@@ -86,7 +86,7 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomSheet(),
+      bottomNavigationBar: const CustomBottomNavigationBar(initialIndex: 1),
     );
   }
 }
