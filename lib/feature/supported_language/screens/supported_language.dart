@@ -42,6 +42,7 @@ class SupportedLanguage extends StatelessWidget {
               LanguageCard(
                   onTap: () {
                     Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'en');
+                    
                   },
                 color: const Color(0xFF6E6CA6),
                 title: 'English (ASL)',
