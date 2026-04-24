@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
+import 'package:freetalk/feature/settings/logic/theme_cubit.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
-
-  @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-  bool isDarkMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +19,7 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               const Text(
                 'Settings',
                 style: TextStyle(
@@ -41,7 +36,7 @@ class _SettingScreenState extends State<SettingScreen> {
               const SizedBox(height: 8),
 
               // Dark Mode Section
-              _buildDarkModeSection(),
+              _buildDarkModeSection(context),
               const SizedBox(height: 8),
 
               // Profile Section Header
@@ -78,6 +73,54 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(initialIndex: 3),
+    );
+  }
+
+  static Widget _buildDarkModeSection(BuildContext context) {
+    return BlocBuilder<ThemeCubit, bool>(
+      builder: (context, isDarkMode) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: AppColors.primaryDark,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: const BoxDecoration(
+                  color: Color(0xFF4A4A7E),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.dark_mode, color: Colors.white, size: 20),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Dark Mode',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+              const Spacer(),
+              Transform.scale(
+                scale: 0.8,
+                child: Switch(
+                  value: isDarkMode,
+                  onChanged: (value) {
+                    context.read<ThemeCubit>().toggleTheme();
+                  },
+                  activeColor: const Color(0xFF4A4A7E),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -132,52 +175,6 @@ class _SettingScreenState extends State<SettingScreen> {
             onPressed: () {
               Navigator.of(context).pushNamed(Routes.accountScreen);
             },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDarkModeSection() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.primaryDark,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFF4A4A7E),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.dark_mode, color: Colors.white, size: 20),
-          ),
-          const SizedBox(width: 12),
-          const Text(
-            'Dark Mode',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-          const Spacer(),
-          Transform.scale(
-            scale: 0.8,
-            child: Switch(
-              value: isDarkMode,
-              onChanged: (value) {
-                setState(() {
-                  isDarkMode = value;
-                });
-              },
-              activeColor: const Color(0xFF4A4A7E),
-            ),
           ),
         ],
       ),

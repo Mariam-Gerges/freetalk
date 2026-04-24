@@ -50,8 +50,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
           globalSelectedLanguage; // استرجاع اللغة في المرات القادمة
     }
 
-    print("Selected Language: $selectedLanguage");
-
     loadLetters();
   }
 
