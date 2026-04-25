@@ -7,6 +7,8 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final Color? fillColor;
+  final Color? border;
 
   const CustomTextFormField({
     super.key,
@@ -15,7 +17,9 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
-    this.validator, required border,
+    this.validator,
+    this.fillColor,
+    this.border,
   });
 
   @override
@@ -24,17 +28,33 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       validator: validator,
+      style: TextStyle(
+        color: fillColor == Colors.black ? Colors.white : Colors.black,
+      ),
       decoration: InputDecoration(
-          hintText: hintText,
-            hintStyle: const TextStyle(color: Colors.grey),
-
-            filled: true,
-            fillColor: Colors.white,
-        
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: fillColor == Colors.white
+              ? Colors.grey[600]
+              : Colors.grey[400],
+        ),
+        filled: true,
+        fillColor: fillColor ?? Colors.white,
+        prefixIcon: prefixIcon != null
+            ? Icon(prefixIcon, color: Colors.grey[600])
+            : null,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
       ),
     );
