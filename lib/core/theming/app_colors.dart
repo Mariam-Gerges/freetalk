@@ -15,7 +15,7 @@ abstract class AppColors {
   static const Color textPrimaryDark = Color(0xffffffff);
   static const Color textSecondaryDark = Color(0xff9CA3AF);
   static const Color dividerDark = Color(0xff374151);
-  static const Color inputBackgroundDark = Color(0xff1F1F3D);
+  static const Color inputBackgroundDark = Color(0xff2A2A5E); // Indigo tint for inputs
 
   // Common Colors
   static const Color white = Color(0xffffffff);

@@ -93,14 +93,15 @@ class _ChatBotState extends State<ChatBot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.primary,
-        title: const Text(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
           'Chat Bot',
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).textTheme.titleLarge?.color ??
+                Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.w700,
             fontSize: 24,
           ),
@@ -131,6 +132,7 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   Widget _buildChatBubble(ChatMessage message) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -141,15 +143,15 @@ class _ChatBotState extends State<ChatBot> {
           if (message.isBot)
             CircleAvatar(
               radius: 18,
-              backgroundColor: Colors.white24,
-              child: Text('🤖', style: TextStyle(fontSize: 20)),
+              backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+              child: const Text('🤖', style: TextStyle(fontSize: 20)),
             ),
           const SizedBox(width: 8),
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: message.isBot ? Colors.white : Colors.white70,
+                color: message.isBot ? theme.cardColor : theme.colorScheme.primary,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -165,7 +167,7 @@ class _ChatBotState extends State<ChatBot> {
                   Text(
                     message.text,
                     style: TextStyle(
-                      color: message.isBot ? Colors.black87 : Colors.white,
+                      color: message.isBot ? theme.colorScheme.onSurface : theme.colorScheme.onPrimary,
                       fontSize: 15,
                       height: 1.4,
                     ),
@@ -174,7 +176,7 @@ class _ChatBotState extends State<ChatBot> {
                   Text(
                     _formatTime(message.timestamp),
                     style: TextStyle(
-                      color: message.isBot ? Colors.grey[600] : Colors.white70,
+                      color: message.isBot ? theme.hintColor : theme.colorScheme.onPrimary.withOpacity(0.7),
                       fontSize: 12,
                     ),
                   ),
@@ -186,7 +188,7 @@ class _ChatBotState extends State<ChatBot> {
           if (!message.isBot)
             CircleAvatar(
               radius: 18,
-              backgroundColor: Colors.white70,
+              backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
               child: const Text('👤', style: TextStyle(fontSize: 20)),
             ),
         ],
@@ -195,22 +197,23 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   Widget _buildTypingIndicator() {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 18,
-            backgroundColor: Colors.white24,
-            child: Text('🤖', style: TextStyle(fontSize: 20)),
+            backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+            child: const Text('🤖', style: TextStyle(fontSize: 20)),
           ),
           const SizedBox(width: 8),
           Flexible(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.cardColor,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -220,7 +223,7 @@ class _ChatBotState extends State<ChatBot> {
                   ),
                 ],
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
@@ -228,14 +231,14 @@ class _ChatBotState extends State<ChatBot> {
                     height: 16,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: Colors.blueAccent,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     '......',
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                       fontSize: 13,
                       height: 1.4,
                     ),
@@ -250,10 +253,11 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   Widget _buildMessageInputField() {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: theme.scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -268,20 +272,23 @@ class _ChatBotState extends State<ChatBot> {
             Expanded(
               child: TextField(
                 controller: _messageController,
+                style: TextStyle(color: theme.colorScheme.onSurface),
                 decoration: InputDecoration(
                   hintText: 'Type your message...',
-                  hintStyle: const TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(color: theme.hintColor),
+                  fillColor: theme.cardColor,
+                  filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide.none,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+                    borderSide: BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: AppColors.white, width: 2),
+                    borderSide: BorderSide(color: theme.colorScheme.primary, width: 1.5),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -294,9 +301,9 @@ class _ChatBotState extends State<ChatBot> {
             const SizedBox(width: 8),
             FloatingActionButton(
               mini: true,
-              backgroundColor: AppColors.primaryDark,
+              backgroundColor: theme.colorScheme.primary,
               onPressed: _sendMessage,
-              child: const Icon(Icons.send, color: Colors.white, size: 20),
+              child: Icon(Icons.send, color: theme.colorScheme.onPrimary, size: 20),
             ),
           ],
         ),

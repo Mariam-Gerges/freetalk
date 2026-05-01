@@ -25,6 +25,6 @@ class SecureStorage {
 
   static Future<bool> getTheme() async {
     final value = await _storage.read(key: _themeKey);
-    return value == 'false';
+    return value == 'true';
   }
 }

@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context.go(Routes.onboardingScreen1);
       } catch (e) {
         // Handle GoRouter not found error
-        Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen1);
+        Navigator.of(context).pushReplacementNamed(Routes.supportedlanguageScreen);
       }
     }
   }

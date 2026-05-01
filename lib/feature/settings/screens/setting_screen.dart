@@ -11,7 +11,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       body: SingleChildScrollView(
         child: Padding(
@@ -20,12 +20,13 @@ class SettingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Settings',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.titleLarge?.color ??
+                      Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               // Profile Section
@@ -40,8 +41,9 @@ class SettingScreen extends StatelessWidget {
               const SizedBox(height: 8),
 
               // Profile Section Header
-              _buildSectionHeader('Profile'),
+              _buildSectionHeader(context, 'Profile'),
               _buildSettingItem(
+                context,
                 icon: Icons.person,
                 iconColor: const Color(0xFFFFA500),
                 title: 'Edit Profile',
@@ -50,6 +52,7 @@ class SettingScreen extends StatelessWidget {
                 },
               ),
               _buildSettingItem(
+                context,
                 icon: Icons.lock,
                 iconColor: const Color(0xFF1E90FF),
                 title: 'Change Password',
@@ -59,6 +62,7 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               _buildSettingItem(
+                context,
                 icon: Icons.logout,
                 iconColor: const Color(0xFFFF6B6B),
                 title: 'Logout',
@@ -82,7 +86,7 @@ class SettingScreen extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: AppColors.primaryDark,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -91,19 +95,19 @@ class SettingScreen extends StatelessWidget {
               Container(
                 width: 40,
                 height: 40,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF4A4A7E),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.dark_mode, color: Colors.white, size: 20),
+                child: Icon(Icons.dark_mode, color: Theme.of(context).primaryColor, size: 20),
               ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 'Dark Mode',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const Spacer(),
@@ -127,7 +131,7 @@ class SettingScreen extends StatelessWidget {
   Widget _buildProfileSection(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primaryDark,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(16),
@@ -138,10 +142,10 @@ class SettingScreen extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: const Color(0xFF4A4A7E),
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.person, color: Colors.grey, size: 32),
+            child: Icon(Icons.person, color: Theme.of(context).primaryColor, size: 32),
           ),
           const SizedBox(width: 16),
           // User Info
@@ -149,27 +153,27 @@ class SettingScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'john doe',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Show personal details',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[400]),
+                  style: TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
                 ),
               ],
             ),
           ),
           // Arrow Icon
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_forward_ios,
-              color: Colors.grey,
+              color: Theme.of(context).hintColor,
               size: 20,
             ),
             onPressed: () {
@@ -181,7 +185,7 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
       child: Text(
@@ -189,14 +193,15 @@ class SettingScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: Colors.grey[500],
+          color: Theme.of(context).hintColor,
           letterSpacing: 0.5,
         ),
       ),
     );
   }
 
-  Widget _buildSettingItem({
+  Widget _buildSettingItem(
+    BuildContext context, {
     required IconData icon,
     required Color iconColor,
     required String title,
@@ -206,7 +211,7 @@ class SettingScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.primaryDark,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
@@ -236,7 +241,7 @@ class SettingScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       color: isDestructive
                           ? const Color(0xFFFF6B6B)
-                          : Colors.white,
+                          : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -244,7 +249,7 @@ class SettingScreen extends StatelessWidget {
                   Icons.arrow_forward_ios,
                   color: isDestructive
                       ? const Color(0xFFFF6B6B)
-                      : Colors.grey[500],
+                      : Theme.of(context).hintColor,
                   size: 16,
                 ),
               ],
@@ -260,11 +265,11 @@ class SettingScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFF2A2A5E),
-          title: const Text('Logout', style: TextStyle(color: Colors.white)),
-          content: const Text(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          title: Text('Logout', style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+          content: Text(
             'Are you sure you want to logout?',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Theme.of(context).hintColor),
           ),
           actions: [
             TextButton(

@@ -150,17 +150,18 @@ class _TranslateScreenState extends State<TranslateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Translate',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.titleLarge?.color ??
+                      Theme.of(context).colorScheme.onSurface,
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
                 ),
@@ -191,9 +192,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       ),
 
                       IconButton(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.camera_alt,
-                          color: AppColors.primary,
+                          color: Theme.of(context).primaryColor,
                         ),
                         onPressed: pickImageFromCamera,
                       ),
@@ -201,7 +202,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       IconButton(
                         icon: Icon(
                           isListening ? Icons.mic : Icons.mic_none,
-                          color: AppColors.primary,
+                          color: Theme.of(context).primaryColor,
                         ),
                         onPressed: () {
                           isListening ? stopListening() : startListening();
@@ -219,14 +220,14 @@ class _TranslateScreenState extends State<TranslateScreen> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
                     child: _textController.text.isEmpty
-                        ? const Text(
+                        ? Text(
                             'Sign language images will appear here',
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Theme.of(context).hintColor),
                           )
                         : Padding(
                             padding: const EdgeInsets.all(16),

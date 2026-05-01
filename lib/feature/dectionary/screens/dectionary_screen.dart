@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,6 +17,7 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
   String selectedLanguage = globalSelectedLanguage;
   Map<String, String> lettersMap = {};
 
+  /// تحميل الحروف من Supabase
   Future<void> loadLetters() async {
     final response = await Supabase.instance.client
         .from('sign_letters')
@@ -29,6 +29,8 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
     for (var item in response) {
       lettersMap[item['letter']] = item['image_url'];
     }
+
+    print("Loaded letters: $lettersMap"); // DEBUG
   }
 
   @override
@@ -44,23 +46,31 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
       selectedLanguage = globalSelectedLanguage;
     }
 
+    /// مهم جدًا: نستنى الداتا قبل ما نستخدمها
     loadLetters().then((_) {
       setState(() {});
     });
   }
 
-  Future<void> convertWordToSigns(String word) async {
+  /// تحويل الكلمة لصور
+  void convertWordToSigns(String word) {
     resultImages.clear();
 
     for (int i = 0; i < word.length; i++) {
       String letter = word[i];
 
+      // lowercase للإنجليزي
       if (selectedLanguage == "en") {
         letter = letter.toLowerCase();
       }
 
+      // تجاهل المسافات
+      if (letter.trim().isEmpty) continue;
+
       if (lettersMap.containsKey(letter)) {
         resultImages.add(lettersMap[letter]!);
+      } else {
+        print("❌ Not found: $letter"); // DEBUG
       }
     }
 
@@ -76,17 +86,18 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Dictionary',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.titleLarge?.color ??
+                      Theme.of(context).colorScheme.onSurface,
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
                 ),
@@ -94,7 +105,7 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
 
               const SizedBox(height: 8),
 
-              /// search
+              /// SEARCH
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -103,9 +114,7 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: TextField(
                     controller: _searchController,
-                    onChanged: (value) {
-                      convertWordToSigns(value);
-                    },
+                    onChanged: convertWordToSigns, // نفس translate
                     decoration: const InputDecoration(
                       hintText: 'Search word',
                       border: InputBorder.none,
@@ -116,36 +125,52 @@ class _DectionaryScreenState extends State<DectionaryScreen> {
 
               const SizedBox(height: 20),
 
-              /// result
+              /// RESULT
               Expanded(
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
                     child: _searchController.text.isEmpty
-                        ? const Text(
-                            'Search for a word to see sign images',
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 10,
-                              runSpacing: 10,
-                              children: resultImages.map((imageUrl) {
-                                return Image.network(
-                                  imageUrl,
-                                  width: 70,
-                                  height: 70,
-                                  fit: BoxFit.contain,
-                                );
-                              }).toList(),
+                        ? Text(
+                            'Sign language images will appear here',
+                            style: TextStyle(
+                              color: Theme.of(context).hintColor,
                             ),
-                          ),
+                          )
+                        : resultImages.isEmpty
+                            ? Text(
+                                'No signs found',
+                                style: TextStyle(
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  children: resultImages.map((imageUrl) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        imageUrl,
+                                        width: 70,
+                                        height: 70,
+                                        fit: BoxFit.contain,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const Icon(Icons.error);
+                                        },
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                   ),
                 ),
               ),
