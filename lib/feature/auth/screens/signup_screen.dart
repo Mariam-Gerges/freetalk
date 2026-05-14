@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freetalk/core/helper/spacing.dart';
+import 'package:freetalk/core/helper/theme_helper.dart';
 import 'package:freetalk/core/routing/routes.dart';
 import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/feature/auth/data/model/register_request_body.dart';
@@ -39,9 +40,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.primary,
+    return ThemeConsumer(
+      builder: (context, isDarkMode) {
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         resizeToAvoidBottomInset: true,
         body: BlocListener<AuthCubit, AuthCubitState>(
           listener: (context, state) {
@@ -80,7 +83,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Text(
                             'Create Account',
                             style: TextStyle(
-                              color: AppColors.white,
+                              color: Theme.of(context).textTheme.titleLarge?.color ??
+                                  Theme.of(context).colorScheme.onSurface,
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                             ),
@@ -94,13 +98,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Text(
                                 'Already have an account?',
                                 style: TextStyle(
-                                  color: Color(0xFF9CA3AF),
+                                  color: isDarkMode
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.textSecondaryLight,
                                   fontSize: 16,
                                 ),
                               ),
                               CustomTextButton(
                                 title: 'Login',
-                                textColor: AppColors.white,
+                                textColor: isDarkMode
+                                    ? AppColors.white
+                                    : Theme.of(context).primaryColor,
                                 onTap: () {
                                   Navigator.pushReplacementNamed(
                                     context,
@@ -247,7 +255,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
-      ),
+          ),
+        );
+      },
     );
   }
 

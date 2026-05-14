@@ -9,17 +9,18 @@ class SupportedLanguage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Supported Languages',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.titleLarge?.color ??
+                      Theme.of(context).colorScheme.onSurface,
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
                 ),
@@ -30,7 +31,7 @@ class SupportedLanguage extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'en');
                 },
-                color: const Color(0xFF223EAF),
+                color: AppColors.french,
                 title: 'French (LSF)',
                 subtitle:
                     'Access lessons and full dictionary for French sign language (LSF)',
@@ -44,7 +45,7 @@ class SupportedLanguage extends StatelessWidget {
                     Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'en');
                     
                   },
-                color: const Color(0xFF6E6CA6),
+                color: AppColors.american,
                 title: 'English (ASL)',
                 subtitle:
                     'Explore comprehensive English sign language (ASL) Dictionary and lessons',
@@ -57,7 +58,7 @@ class SupportedLanguage extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(Routes.translateScreen, arguments: 'ar');
                 },
-                color: const Color(0xFF0E8A2F),
+                color: AppColors.egyptian,
                 title: 'Arabic',
                 subtitle:
                     'Discover resources for Arabic sign language tailored for native speakers',

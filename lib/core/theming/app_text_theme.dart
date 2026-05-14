@@ -11,7 +11,6 @@ abstract class AppTextTheme {
     color: AppColors.black,
   );
 
-
   static TextStyle font12BlueRegular = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeightHelper.regular,
@@ -35,15 +34,21 @@ abstract class AppTextTheme {
     fontWeight: FontWeightHelper.regular,
     color: AppColors.black,
   );
+
   static TextStyle font22BlackRegular = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeightHelper.regular,
     color: AppColors.black,
   );
-  // static TextStyle font24BlackBold = TextStyle(
-  //   fontSize: 24.sp,
-  //   fontWeight: FontWeightHelper.bold,
-  //   color: AppColors.black,
-  // );
 
+  // New Generic Styles (No hardcoded colors, relies on Theme context)
+  static TextStyle font20Bold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeightHelper.bold,
+  );
+
+  static TextStyle font14Regular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.regular,
+  );
 }

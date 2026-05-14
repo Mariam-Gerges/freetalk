@@ -8,7 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final Color? fillColor;
-  final Color? border;
+  final dynamic border; // Kept to avoid breaking existing usages passing border: null
 
   const CustomTextFormField({
     super.key,
@@ -24,37 +24,39 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
       validator: validator,
       style: TextStyle(
-        color: fillColor == Colors.black ? Colors.white : Colors.black,
+        color: theme.colorScheme.onSurface,
+        fontFamily: "LeagueSpartan",
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(
-          color: fillColor == Colors.white
-              ? Colors.grey[600]
-              : Colors.grey[400],
-        ),
         filled: true,
-        fillColor: fillColor ?? Colors.white,
+        fillColor: fillColor, // Falls back to theme if null
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: Colors.grey[600])
+            ? Icon(prefixIcon, color: theme.hintColor)
             : null,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+        // Ensure error validations have the right border and font styling
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: theme.colorScheme.error, width: 1.5),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: theme.colorScheme.error, width: 2.0),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        errorStyle: TextStyle(
+          color: theme.colorScheme.error,
+          fontFamily: "LeagueSpartan",
+          fontSize: 13,
         ),
       ),
     );

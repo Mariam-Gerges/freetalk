@@ -39,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context, isDarkMode) {
         return SafeArea(
           child: Scaffold(
-            backgroundColor: isDarkMode
-                ? AppColors.primary
-                : AppColors.scaffoldBackgroundLight,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             resizeToAvoidBottomInset: true,
             body: BlocListener<AuthCubit, AuthCubitState>(
               listener: (context, state) {
@@ -53,6 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   failure: (error) {
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   Routes.supportedlanguageScreen,
+                    // );
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(error.message ?? 'Login failed'),
@@ -77,9 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           'Login',
                           style: TextStyle(
-                            color: isDarkMode
-                                ? AppColors.white
-                                : AppColors.black,
+                            color: Theme.of(context).textTheme.titleLarge?.color ??
+                                Theme.of(context).colorScheme.onSurface,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                           ),
@@ -152,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(
                                 color: isDarkMode
                                     ? AppColors.white
-                                    : AppColors.primary,
+                                    : Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -189,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Don\'t have an account?',
                               style: TextStyle(
                                 color: isDarkMode
-                                    ? const Color(0xFF9CA3AF)
+                                    ? AppColors.textSecondaryDark
                                     : AppColors.textSecondaryLight,
                                 fontSize: 14,
                               ),
@@ -199,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               title: 'Sign Up',
                               textColor: isDarkMode
                                   ? AppColors.white
-                                  : AppColors.primary,
+                                  : Theme.of(context).primaryColor,
                               onTap: () {
                                 Navigator.pushReplacementNamed(
                                   context,

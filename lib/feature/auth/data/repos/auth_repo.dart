@@ -13,13 +13,10 @@ class AuthRepo {
   Future<ApiResult<LoginResponse>> login(
     LoginRequestBody loginRequestBody,
   ) async {
-    try {
       final response = await _apiService.login(loginRequestBody);
       await SecureStorage.saveToken(response.token!);
       return ApiResult.success(response);
-    } catch (error) {
-      return ApiResult.failure(ErrorHandler.handle(error));
-    }
+   
   }
 
   Future<ApiResult<LoginResponse>> register(
