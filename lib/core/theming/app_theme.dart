@@ -25,6 +25,13 @@ class AppTheme {
         color: AppColors.black,
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.primary,
+      foregroundColor: AppColors.white, 
+      elevation: 0,
+      
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.inputBackgroundLight,
@@ -86,6 +93,7 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
+      
       fillColor: AppColors.inputBackgroundDark,
       hintStyle: const TextStyle(color: AppColors.textSecondaryDark),
       border: OutlineInputBorder(

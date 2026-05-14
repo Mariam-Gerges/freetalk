@@ -152,11 +152,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           Positioned(
             top: 5,
             child: FloatingActionButton(
-              heroTag: 'chat_fab',
+              heroTag: null,
               onPressed: () => _onItemTapped(2),
               backgroundColor: AppColors.primaryDark,
-              elevation:
-                  0, // removed elevation so it sits nicely inside the bump
+              elevation: 0, // removed elevation so it sits nicely inside the bump
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),

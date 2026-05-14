@@ -31,7 +31,9 @@ class _TranslateBodyState extends State<TranslateBody> {
     controllerLogic.setLanguage(args);
 
     controllerLogic.loadLetters().then((_) {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 

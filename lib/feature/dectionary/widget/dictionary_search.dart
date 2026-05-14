@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class DictionarySearch extends StatelessWidget {
   final TextEditingController controller;
@@ -13,9 +14,8 @@ class DictionarySearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: TextField(

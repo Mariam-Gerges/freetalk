@@ -32,10 +32,10 @@ class SettingBody extends StatelessWidget {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ProfileSection(),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: ProfileSection(),
+              // ),
 
               const SizedBox(height: 8),
               const DarkModeSection(),

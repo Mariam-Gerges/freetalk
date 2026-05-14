@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class DictionaryResult extends StatelessWidget {
   final TextEditingController controller;
@@ -16,25 +17,22 @@ class DictionaryResult extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
           child: controller.text.isEmpty
               ? _buildHint(context, 'Sign language images will appear here')
               : resultImages.isEmpty
-                  ? _buildHint(context, 'No signs found')
-                  : _buildImages(),
+              ? _buildHint(context, 'No signs found')
+              : _buildImages(),
         ),
       ),
     );
   }
 
   Widget _buildHint(BuildContext context, String text) {
-    return Text(
-      text,
-      style: TextStyle(color: Theme.of(context).hintColor),
-    );
+    return Text(text, style: TextStyle(color: AppColors.inputBackgroundDark));
   }
 
   Widget _buildImages() {
