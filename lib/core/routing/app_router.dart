@@ -6,15 +6,18 @@ import 'package:freetalk/feature/auth/screens/forget_passward.dart';
 import 'package:freetalk/feature/auth/screens/login_screen.dart';
 import 'package:freetalk/feature/auth/screens/signup_screen.dart';
 import 'package:freetalk/feature/change_passward/change_password_screen.dart';
-import 'package:freetalk/feature/chat_bot/screen/chat_bot.dart';
-import 'package:freetalk/feature/dectionary/screens/dectionary_screen.dart';
+import 'package:freetalk/feature/chat_bot/screen/chat_screen.dart';
+import 'package:freetalk/feature/dectionary/screens/dictionary_screen.dart';
+
 import 'package:freetalk/feature/onbording/screens/onbording1_screen.dart';
 import 'package:freetalk/feature/onbording/screens/onbording2_screen.dart';
 import 'package:freetalk/feature/onbording/screens/onbording3_screen.dart';
-import 'package:freetalk/feature/settings/screens/setting_screen.dart';
+import 'package:freetalk/feature/settings/screen/setting_screen.dart';
+
 import 'package:freetalk/feature/splash/screens/splash_screen.dart';
 import 'package:freetalk/feature/supported_language/screens/supported_language.dart';
-import 'package:freetalk/feature/translate/screens/translate_screen.dart';
+import 'package:freetalk/feature/translate/screen/translate_screen.dart';
+
 
 import 'routes.dart';
 
@@ -53,7 +56,7 @@ case Routes.signupScreen:
         return MaterialPageRoute(builder: (_) => const TranslateScreen(), settings: settings);
 
       case Routes.dictionaryScreen:
-        return MaterialPageRoute(builder: (_) => const DectionaryScreen());
+        return MaterialPageRoute(builder: (_) => const DictionaryScreen());
       case Routes.accountScreen:
         return MaterialPageRoute(builder: (_) => const AccountScreen());
       case Routes.chatbotScreen:
