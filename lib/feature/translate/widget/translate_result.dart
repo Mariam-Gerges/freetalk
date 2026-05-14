@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freetalk/core/theming/app_colors.dart';
 
 class TranslateResult extends StatelessWidget {
   final TextEditingController controller;
@@ -16,14 +17,15 @@ class TranslateResult extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: Colors.white,
+          // color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
           child: controller.text.isEmpty
               ? Text(
                   'Sign language images will appear here',
-                  style: TextStyle(color: Theme.of(context).hintColor),
+                  style: TextStyle(color: AppColors.inputBackgroundDark),
                 )
               : Padding(
                   padding: const EdgeInsets.all(16),

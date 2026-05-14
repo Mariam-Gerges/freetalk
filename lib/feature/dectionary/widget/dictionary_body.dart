@@ -46,7 +46,9 @@ class _DictionaryBodyState extends State<DictionaryBody> {
       selectedLanguage = globalSelectedLanguage;
     }
 
-    loadLetters().then((_) => setState(() {}));
+    loadLetters().then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   void convertWordToSigns(String word) {
