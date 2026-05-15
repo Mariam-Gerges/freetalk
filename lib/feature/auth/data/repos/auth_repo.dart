@@ -16,7 +16,6 @@ class AuthRepo {
       final response = await _apiService.login(loginRequestBody);
       await SecureStorage.saveToken(response.token!);
       return ApiResult.success(response);
-   
   }
 
   Future<ApiResult<LoginResponse>> register(
