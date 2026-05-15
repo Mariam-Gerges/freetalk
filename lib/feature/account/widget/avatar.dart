@@ -15,11 +15,11 @@ class AvatarWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: Text(
               initials ?? '',
               style: TextStyle(
-                color: AppColors.primary,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
               ),
@@ -32,7 +32,7 @@ class AvatarWidget extends StatelessWidget {
               onTap: onEditTap,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.primary,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -42,7 +42,7 @@ class AvatarWidget extends StatelessWidget {
                   ],
                 ),
                 padding: const EdgeInsets.all(8),
-                child: Icon(Icons.edit, size: 18, color: AppColors.primary),
+                child: Icon(Icons.edit, size: 18, color: AppColors.white),
               ),
             ),
           ),

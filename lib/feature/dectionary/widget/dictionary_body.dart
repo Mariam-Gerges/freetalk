@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:freetalk/core/widget/bottom_navigation_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:freetalk/feature/translate/data/models/sign_model.dart';
+import 'package:freetalk/feature/translate/logic/translate_controller.dart';
 import 'dictionary_search.dart';
 import 'dictionary_result.dart';
 import 'dictionary_title.dart';
+
 
 class DictionaryBody extends StatefulWidget {
   const DictionaryBody({super.key});
@@ -16,8 +19,7 @@ class _DictionaryBodyState extends State<DictionaryBody> {
   final TextEditingController _searchController = TextEditingController();
 
   List<String> resultImages = [];
-  static String globalSelectedLanguage = "ar";
-  String selectedLanguage = globalSelectedLanguage;
+  String selectedLanguage = TranslateController.globalSelectedLanguage;
   Map<String, String> lettersMap = {};
 
   Future<void> loadLetters() async {
@@ -29,7 +31,10 @@ class _DictionaryBodyState extends State<DictionaryBody> {
     lettersMap.clear();
 
     for (var item in response) {
-      lettersMap[item['letter']] = item['image_url'];
+      final sign = SignModel.fromJson(item);
+      if (sign.letter != null && sign.letter!.isNotEmpty && sign.imageUrl != null) {
+        lettersMap[sign.letter!] = sign.imageUrl!;
+      }
     }
   }
 
@@ -41,9 +46,9 @@ class _DictionaryBodyState extends State<DictionaryBody> {
 
     if (args != null) {
       selectedLanguage = args as String;
-      globalSelectedLanguage = selectedLanguage;
+      TranslateController.globalSelectedLanguage = selectedLanguage;
     } else {
-      selectedLanguage = globalSelectedLanguage;
+      selectedLanguage = TranslateController.globalSelectedLanguage;
     }
 
     loadLetters().then((_) {
@@ -51,20 +56,35 @@ class _DictionaryBodyState extends State<DictionaryBody> {
     });
   }
 
-  void convertWordToSigns(String word) {
+  void convertWordToSigns(String text) {
     resultImages.clear();
 
-    for (int i = 0; i < word.length; i++) {
-      String letter = word[i];
+    if (text.trim().isEmpty) {
+      setState(() {});
+      return;
+    }
+
+    // Split text into words based on spaces
+    List<String> words = text.trim().split(RegExp(r'\s+'));
+
+    for (int w = 0; w < words.length; w++) {
+      String word = words[w];
 
       if (selectedLanguage == "en") {
-        letter = letter.toLowerCase();
+        word = word.toLowerCase();
       }
 
-      if (letter.trim().isEmpty) continue;
-
-      if (lettersMap.containsKey(letter)) {
-        resultImages.add(lettersMap[letter]!);
+      // 1. Try to find an image for the whole word
+      if (lettersMap.containsKey(word)) {
+        resultImages.add(lettersMap[word]!);
+      } else {
+        // 2. Fallback: split the word into individual letters
+        for (int i = 0; i < word.length; i++) {
+          String letter = word[i];
+          if (lettersMap.containsKey(letter)) {
+            resultImages.add(lettersMap[letter]!);
+          }
+        }
       }
     }
 

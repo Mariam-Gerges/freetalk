@@ -4,7 +4,6 @@ import 'package:freetalk/core/theming/app_colors.dart';
 import 'package:freetalk/feature/splash/widget/splash_loader.dart';
 import 'package:freetalk/feature/splash/widget/splash_logo.dart';
 import 'package:freetalk/feature/splash/widget/splash_title.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     if (mounted) {
       try {
-        context.go(Routes.onboardingScreen1);
+        Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen1);
       } catch (e) {
         // Handle GoRouter not found error
         Navigator.of(context).pushReplacementNamed(Routes.supportedlanguageScreen);

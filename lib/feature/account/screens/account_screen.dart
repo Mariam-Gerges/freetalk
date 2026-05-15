@@ -35,7 +35,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
@@ -59,10 +59,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Account',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).textTheme.titleLarge?.color ?? Theme.of(context).colorScheme.onSurface,
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                         ),
@@ -84,7 +84,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 );
               },
               error: (msg) => Center(
-                child: Text(msg, style: const TextStyle(color: Colors.white)),
+                child: Text(msg, style: TextStyle(color: Theme.of(context).colorScheme.error)),
               ),
             );
           },
