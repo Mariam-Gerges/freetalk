@@ -57,7 +57,7 @@ class _SplashLogoState extends State<SplashLogo>
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Image.asset('assets/images/ic_launcher.png'),
+                  child: Image.asset('assets/images/ic_launcher.jpeg'),
                 ),
               ],
             ),
