@@ -151,9 +151,9 @@ Future<void> sendImageToApi(File imageFile) async {
     String apiUrl;
 
     if (selectedLanguage == "en") {
-      apiUrl = 'https://you-sef-sign-api.hf.space/predict/arabic';
-    } else {
       apiUrl = 'https://you-sef-sign-api.hf.space/predict/english';
+    } else {
+      apiUrl = 'https://you-sef-sign-api.hf.space/predict/arabic';
     }
 
     log("=> Selected Language: $selectedLanguage");
