@@ -53,11 +53,18 @@ class _SplashLogoState extends State<SplashLogo>
                 Container(
                   width: 120,
                   height: 120,
+
                   decoration: BoxDecoration(
+
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Image.asset('assets/images/ic_launcher.jpeg'),
+                  child: Image.asset(
+                    'assets/images/ic_launcher.jpeg',
+                    fit: BoxFit.cover,
+                    width: 120,
+                    height: 120,
+                  ),
                 ),
               ],
             ),
