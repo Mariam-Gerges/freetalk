@@ -32,8 +32,7 @@ class _ChatBodyState extends State<ChatBody> {
   void initState() {
     super.initState();
 
-    const apiKey = 'AIzaSyB3-OWyg3QF-LYVyGro6p_mhiz-RIbZcvI';
-
+    const apiKey = 'AQ.Ab8RN6KheWcBbTD-GIs2II1w1ofjusFMcqzJ3Buv9PI2RiKqbw';
     _model = GenerativeModel(
       model: 'gemini-2.5-flash',
       apiKey: apiKey,
